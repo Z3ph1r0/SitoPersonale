@@ -2,37 +2,80 @@
 <html lang="it">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="widht=device-widht, initial-scaler=1.0">
- <title>Pagina di Federico Rozzoni</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Il sito di Federico Rozzoni</title>
+    <style>
+      .paragrafo {
+          border-width: 5px;
+          border-style:dashed;
+          border-color: #ffffff;
+          border-radius: 5px;
+          padding: 10px;
+          color: #ffffff;
+          background-color: #0d0d0d
+      }
+
+      #footer {
+          border-top: 1px solid black;
+          margin-top: 30px;
+      }
+      body {
+            background-color: #d6cdcddd;
+        }
+      </style>
 </head>
 
 <body>
 
- <div>
-  [logo] [chi siamo] [i miei lavori] [modulo di contatti] [dove sono]
- </div>
+    <div>
+        [logo] 
+        <a href="#chisono">[chi siamo]</a>
+        <a href="#imieilavori">[miei lavori]</a>
+        [modulo di contatti] 
+        [dove sono]
+    </div>
 
+    <div id="chisono">
+        <h2>Chi sono</h2>
+        <p class="paragrafo">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
+            and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
+            into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
+            release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
+            software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+    </div>
 
- <div id="chisiamo">
-  <h2>sono etc etc lorem ipsum est</h2>
- </div>
+    <div id="imieilavori">
+        <h2>I miei lavori</h2>
+        <p class="paragrafo">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
+            and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
+            into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
+            release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
+            software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+    </div>
 
- <div id="imieilavori">
-  <h2>sono etc etc lorem ipsum est</h2>
-  <p>Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. È sopravvissuto non solo a più di cinque secoli, ma anche al passaggio alla videoimpaginazione</p>
- </div>
+    <div id="contatti">
+        <h2>Contatti</h2>
+        <form>
+            -----------
+        </form>
+    </div>
 
- <div id="contatti">
-  <form> 
+    <div id="dovesono">
+      <img src="https://via.placeholder.com/500x300" usemap="#workmap">
+      <map name="workmap">
+        <area shape="rect" title="google" coords="0,0,250,300" href="https://www.google.com">
+        <area shape="rect" title="bing" coords="250,0,500,300" href="https://www.bing.com">
+      </map>
+    </div>
 
-  </form>
- </div>
- <div id="chisiamo">
-  <h2>sono etc etc lorem ipsum est</h2>
- </div>
- <div id="chisiamo">
-  <h2>sono etc etc lorem ipsum est</h2>
- </div>
+    <div id="footer">tel:xxxx indirizzo piva link:cookiepolicy link:privacy</div>
 
- <!-- esempio 13 -->
+</body>
+
+<link rel="icon" type="image/png" href="IMG/Logo Sito 2.png">
+
+</html>
