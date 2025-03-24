@@ -296,6 +296,10 @@ body {
     }
 }
 
+    #section5 {
+        background-color: #000000;
+    }
+
 @media (max-width: 576px) {
     .sidebar {
         width: 45px;
