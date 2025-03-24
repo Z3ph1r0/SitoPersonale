@@ -25,31 +25,31 @@
             </button>
             <ul>
                 <li>
-                    <a href="#section1">
+                    <a href="#section1" title="Scopri chi sono">
                         <i class="fas fa-user"></i>
                         <span class="link-text">Scopri chi sono</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#section2">
+                    <a href="#section2" title="Cosa posso offrire">
                         <i class="fas fa-tools"></i>
                         <span class="link-text">Cosa posso offrire</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#section3">
+                    <a href="#section3" title="I miei valori e come lavoro">
                         <i class="fas fa-heart"></i>
                         <span class="link-text">I miei valori e come lavoro</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#section4">
+                    <a href="#section4" title="I miei lavori">
                         <i class="fas fa-briefcase"></i>
                         <span class="link-text">I miei lavori</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#section5">
+                    <a href="#section5" title="Dove puoi trovarmi">
                         <i class="fas fa-map-marker-alt"></i>
                         <span class="link-text">Dove puoi trovarmi</span>
                     </a>
@@ -120,9 +120,19 @@
                 if (window.innerWidth <= 992) {
                     sidebar.classList.add('collapsed');
                     mainContent.classList.add('expanded');
+                    
+                    // Cambia l'icona della freccia
+                    const icon = toggleBtn.querySelector('i');
+                    icon.classList.remove('fa-chevron-left');
+                    icon.classList.add('fa-chevron-right');
                 } else {
                     sidebar.classList.remove('collapsed');
                     mainContent.classList.remove('expanded');
+                    
+                    // Ripristina l'icona della freccia
+                    const icon = toggleBtn.querySelector('i');
+                    icon.classList.remove('fa-chevron-right');
+                    icon.classList.add('fa-chevron-left');
                 }
             }
             
@@ -146,17 +156,6 @@
                     icon.classList.remove('fa-chevron-right');
                     icon.classList.add('fa-chevron-left');
                 }
-            });
-            
-            // Gestisci click sui link della navbar in modalità mobile
-            const navLinks = document.querySelectorAll('.sidebar ul li a');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    if (window.innerWidth <= 768) {
-                        sidebar.classList.add('collapsed');
-                        mainContent.classList.add('expanded');
-                    }
-                });
             });
         });
     </script>

@@ -9,6 +9,7 @@ body {
     line-height: 1.6;
     color: #333;
     background-color: #f8f9fa;
+    overflow-x: hidden;
 }
 
 .container {
@@ -30,8 +31,8 @@ body {
 }
 
 .sidebar.collapsed {
-    width: 70px;
-    padding: 20px 10px;
+    width: 60px;
+    padding: 20px 5px;
 }
 
 .sidebar-header {
@@ -49,6 +50,7 @@ body {
 
 .sidebar .full-title {
     opacity: 1;
+    transition: opacity 0.3s;
 }
 
 .sidebar.collapsed .full-title {
@@ -59,9 +61,10 @@ body {
 .sidebar .short-title {
     position: absolute;
     top: 0;
-    left: 0;
+    left: 10px;
     opacity: 0;
     display: none;
+    transition: opacity 0.3s;
 }
 
 .sidebar.collapsed .short-title {
@@ -119,6 +122,11 @@ body {
     margin-right: 10px;
 }
 
+.sidebar.collapsed ul li a i {
+    margin-right: 0;
+    font-size: 1.4rem;
+}
+
 .sidebar.collapsed ul li a .link-text {
     opacity: 0;
     width: 0;
@@ -144,8 +152,8 @@ body {
 }
 
 .main-content.expanded {
-    margin-left: 70px;
-    width: calc(100% - 70px);
+    margin-left: 60px;
+    width: calc(100% - 60px);
 }
 
 .section {
@@ -218,57 +226,119 @@ body {
 }
 
 /* Responsive */
+@media (max-width: 992px) {
+    .sidebar {
+        width: 60px;
+        padding: 20px 5px;
+    }
+    
+    .sidebar .full-title {
+        opacity: 0;
+        display: none;
+    }
+    
+    .sidebar .short-title {
+        opacity: 1;
+        display: block;
+    }
+    
+    .sidebar ul li a .link-text {
+        opacity: 0;
+        width: 0;
+        margin-left: 0;
+    }
+    
+    .sidebar ul li a i {
+        margin-right: 0;
+        font-size: 1.4rem;
+    }
+    
+    .main-content {
+        margin-left: 60px;
+        width: calc(100% - 60px);
+        padding: 20px;
+    }
+}
+
 @media (max-width: 768px) {
+    .sidebar {
+        width: 50px;
+        padding: 15px 5px;
+    }
+    
+    .sidebar .short-title {
+        font-size: 1.2rem;
+    }
+    
+    .sidebar ul li a i {
+        font-size: 1.2rem;
+    }
+    
+    .toggle-btn {
+        width: 24px;
+        height: 24px;
+        font-size: 0.8rem;
+    }
+    
+    .main-content {
+        margin-left: 50px;
+        width: calc(100% - 50px);
+        padding: 15px;
+    }
+    
+    .section {
+        padding: 15px;
+        margin-bottom: 30px;
+    }
+    
+    .section h2 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .sidebar {
+        width: 45px;
+        padding: 10px 3px;
+    }
+    
+    .sidebar .short-title {
+        font-size: 1rem;
+    }
+    
+    .sidebar ul li {
+        margin-bottom: 10px;
+    }
+    
+    .sidebar ul li a {
+        padding: 5px;
+    }
+    
+    .sidebar ul li a i {
+        font-size: 1.1rem;
+    }
+    
     .toggle-btn {
         display: none;
     }
     
-    .sidebar, .sidebar.collapsed {
-        width: 100%;
-        height: auto;
-        max-height: 0;
-        overflow: hidden;
-        padding: 0;
-        position: relative;
-        border-bottom: 1px solid #dee2e6;
-    }
-    
-    .sidebar.expanded {
-        max-height: 300px;
-        padding: 15px;
-    }
-    
-    .sidebar-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    
-    .sidebar .full-title, .sidebar.collapsed .full-title {
-        display: block;
-        opacity: 1;
-    }
-    
-    .sidebar .short-title, .sidebar.collapsed .short-title {
-        display: none;
-    }
-    
-    .sidebar ul {
-        margin-top: 10px;
-    }
-    
-    .sidebar ul li a .link-text, .sidebar.collapsed ul li a .link-text {
-        opacity: 1;
-        width: auto;
-    }
-    
-    .main-content, .main-content.expanded {
-        margin-left: 0;
-        width: 100%;
-        padding: 20px;
+    .main-content {
+        margin-left: 45px;
+        width: calc(100% - 45px);
+        padding: 10px;
     }
     
     .section {
-        padding: 20px;
+        padding: 12px;
+        margin-bottom: 20px;
+    }
+    
+    .section h2 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+    
+    .section p {
+        font-size: 0.9rem;
     }
 }
