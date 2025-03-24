@@ -8,145 +8,158 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-<title>Federico Rozzoni Graphics</title>
-    <style>
-      
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: Source Code Pro, sans-serif;
-            line-height: 1.6;
-        }
-        
-        .container {
-            display: flex;
-        }
-        
-        .sidebar {
-            width: 250px;
-            height: 100vh;
-            background-color: #000000;
-            padding: 20px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            overflow-y: auto;
-            border-right: 1px solid #000000;
-        }
-        
-        .sidebar h2 {
-            color: #ffffff;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #dee2e6;
-        }
-        
-        .sidebar ul {
-            list-style: none;
-        }
-        
-        .sidebar ul li {
-            margin-bottom: 10px;
-        }
-        
-        .sidebar ul li a {
-            color: #495057;
-            text-decoration: none;
-            display: block;
-            padding: 8px 10px;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
-        
-        .sidebar ul li a:hover, 
-        .sidebar ul li a.active {
-            background-color: #ffffff;
-            color: rgb(0, 0, 0);
-        }
-        
-        .main-content {
-            margin-left: 250px;
-            padding: 20px;
-            width: calc(100% - 250px);
-        }
-        
-        .section {
-            min-height: 500px;
-            margin-bottom: 30px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 200px;
-            }
-            
-            .main-content {
-                margin-left: 200px;
-                width: calc(100% - 200px);
-            }
-        }
-      </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" type="image/png" href="IMG/Logo Sito 2.png">
+    <title>Federico Rozzoni Graphics</title>
 </head>
 
 <body>
- <div class="container">
-        <div class="sidebar">
-          <div> pippo </div>
-            <h2>Federico Rozzoni Graphics</h2>
+    <div class="container">
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2 class="full-title">Federico Rozzoni Graphics</h2>
+                <h2 class="short-title">FR</h2>
+            </div>
+            <button class="toggle-btn" id="toggleBtn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
             <ul>
-                <li><a href="#section1">Scopri chi sono</a></li>
-                <li><a href="#section2">Cosa posso offrire</a></li>
-                <li><a href="#section3">I miei valori e come lavoro</a></li>
-                <li><a href="#section4">I miei lavori</a></li>
-                <li><a href="#section5">Dove puoi torvarmi</a></li>
+                <li>
+                    <a href="#section1">
+                        <i class="fas fa-user"></i>
+                        <span class="link-text">Scopri chi sono</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#section2">
+                        <i class="fas fa-tools"></i>
+                        <span class="link-text">Cosa posso offrire</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#section3">
+                        <i class="fas fa-heart"></i>
+                        <span class="link-text">I miei valori e come lavoro</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#section4">
+                        <i class="fas fa-briefcase"></i>
+                        <span class="link-text">I miei lavori</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#section5">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span class="link-text">Dove puoi trovarmi</span>
+                    </a>
+                </li>
             </ul>
         </div>
         
-        <div class="main-content">
+        <div class="main-content" id="mainContent">
             <div id="section1" class="section">
                 <h2>Scopri chi sono</h2>
-                <p>Federico – Matematico-Creativo nel Graphic Design
-
-                  Sono un Graphic Designer con una doppia anima: analitica e creativa. Ho un background matematico, ma ho scelto di seguire la mia passione per il digitale, unendo precisione e originalità nei miei progetti.
-                  
-                  Attento ai dettagli e orientato alla qualità, eccello nella gestione del tempo e nel project management. La mia esperienza come cameriere e aiuto barman mi ha reso flessibile e adattabile, qualità che applico anche nel design.
-                  
-                  Offro un servizio serio, curato e accogliente, sempre pronto ad ascoltare e trasformare le idee in soluzioni efficaci. 🚀</p>
+                <p>Matematico-Creativo nel Graphic Design sono un Graphic Designer con una doppia anima: analitica e creativa. Ho un background matematico, ma ho scelto di seguire la mia passione per il digitale, unendo precisione e originalità nei miei progetti.</p>
+                <p>Attento ai dettagli e orientato alla qualità, eccello nella gestione del tempo e nel project management. La mia esperienza come cameriere e aiuto barman mi ha reso flessibile e adattabile, qualità che applico anche nel design.</p>
+                <p>Offro un servizio serio, curato e accogliente, sempre pronto ad ascoltare e trasformare le idee in soluzioni efficaci. 🚀</p>
             </div>
             
             <div id="section2" class="section">
                 <h2>Cosa posso offrire</h2>
-                <p>Contenuto della sezione 2...</p>
+                <p>Servizi di graphic design professionali, tra cui:</p>
+                <ul>
+                    <li>Brand identity e logo design</li>
+                    <li>UI/UX design per siti web e app</li>
+                    <li>Social media graphics</li>
+                    <li>Materiale stampato (brochure, biglietti da visita, flyer)</li>
+                    <li>Illustrazioni digitali</li>
+                </ul>
             </div>
             
             <div id="section3" class="section">
                 <h2>I miei valori e come lavoro</h2>
-                <p>Contenuto della sezione 3...</p>
+                <p>Il mio approccio al design si basa su:</p>
+                <ul>
+                    <li><strong>Precisione matematica:</strong> Ogni elemento è posizionato con cura e attenzione ai dettagli</li>
+                    <li><strong>Creatività intuitiva:</strong> Soluzioni originali che comunicano efficacemente</li>
+                    <li><strong>Collaborazione:</strong> Ascolto attento delle esigenze del cliente</li>
+                    <li><strong>Tempestività:</strong> Rispetto delle scadenze e comunicazione trasparente</li>
+                </ul>
             </div>
             
             <div id="section4" class="section">
                 <h2>I miei lavori</h2>
-                <p>Contenuto della sezione 4...</p>
+                <div class="portfolio-grid">
+                    <!-- Qui andranno i tuoi progetti con immagini e descrizioni -->
+                    <p>Portfolio in aggiornamento... Presto disponibili i miei lavori più recenti!</p>
+                </div>
             </div>
             
             <div id="section5" class="section">
-                <h2>Dove puoi torvarmi</h2>
-                <p>Contenuto della sezione 5...</p>
+                <h2>Dove puoi trovarmi</h2>
+                <p>Puoi contattarmi attraverso:</p>
+                <ul class="contact-info">
+                    <li><i class="fas fa-envelope"></i> <a href="mailto:tuoemail@esempio.com">tuoemail@esempio.com</a></li>
+                    <li><i class="fas fa-phone"></i> <a href="tel:+391234567890">+39 123 456 7890</a></li>
+                    <li><i class="fab fa-instagram"></i> <a href="https://instagram.com/tuoprofilo" target="_blank">@tuoprofilo</a></li>
+                    <li><i class="fab fa-linkedin"></i> <a href="https://linkedin.com/in/tuoprofilo" target="_blank">LinkedIn</a></li>
+                </ul>
             </div>
         </div>
     </div>
-</body>
 
-<link rel="icon" type="image/png" href="IMG/Logo Sito 2.png">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.getElementById('toggleBtn');
+            const mainContent = document.getElementById('mainContent');
+            
+            // Funzione per controllare lo stato della sidebar in base alla larghezza della finestra
+            function checkSidebarState() {
+                if (window.innerWidth <= 992) {
+                    sidebar.classList.add('collapsed');
+                    mainContent.classList.add('expanded');
+                } else {
+                    sidebar.classList.remove('collapsed');
+                    mainContent.classList.remove('expanded');
+                }
+            }
+            
+            // Esegui controllo iniziale
+            checkSidebarState();
+            
+            // Aggiorna lo stato quando la finestra viene ridimensionata
+            window.addEventListener('resize', checkSidebarState);
+            
+            // Toggle manuale della sidebar
+            toggleBtn.addEventListener('click', function() {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+                
+                // Cambia l'icona della freccia in base allo stato della sidebar
+                const icon = toggleBtn.querySelector('i');
+                if (sidebar.classList.contains('collapsed')) {
+                    icon.classList.remove('fa-chevron-left');
+                    icon.classList.add('fa-chevron-right');
+                } else {
+                    icon.classList.remove('fa-chevron-right');
+                    icon.classList.add('fa-chevron-left');
+                }
+            });
+            
+            // Gestisci click sui link della navbar in modalità mobile
+            const navLinks = document.querySelectorAll('.sidebar ul li a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        sidebar.classList.add('collapsed');
+                        mainContent.classList.add('expanded');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
 
 </html>
