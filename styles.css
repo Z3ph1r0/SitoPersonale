@@ -341,4 +341,87 @@ body {
     .section p {
         font-size: 0.9rem;
     }
+    /* Stili per la sezione contatti con form */
+.contact-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.contact-info-column, 
+.contact-form-column {
+    flex: 1 1 400px;
+}
+
+.call-form {
+    background: #f8f8f8;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: 'Source Code Pro', monospace;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.privacy-checkbox {
+    display: flex;
+    align-items: flex-start;
+}
+
+.privacy-checkbox input {
+    width: auto;
+    margin-right: 10px;
+    margin-top: 4px;
+}
+
+.privacy-checkbox label {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.submit-btn {
+    background: #333;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: 'Source Code Pro', monospace;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.submit-btn:hover {
+    background: #555;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .contact-container {
+        flex-direction: column;
+    }
+}
 }
