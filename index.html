@@ -39,13 +39,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#section3" title="I miei valori e come lavoro">
+                    <a href="#section3" title="I miei valori">
                         <i class="fas fa-heart"></i>
                         <span class="link-text">Come lavoro</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#section4" title="I miei lavori">
+                    <a href="#section4" title="Portfolio">
                         <i class="fas fa-briefcase"></i>
                         <span class="link-text">I miei lavori</span>
                     </a>
@@ -63,7 +63,7 @@
     <div class="container">
         <div class="main-content" id="mainContent">
             <div id="section1" class="section">
-                <h2>Scopri chi sono</h2>
+                <h2>Ciao, io sono Federico!</h2>
                 <p>Sono un Graphic Designer con una doppia anima: analitica e creativa. Ho un background di syudi matematici, ma ho scelto di seguire la mia passione per il digitale, unendo precisione e originalità nei miei progetti.</p>
                 <p>Attento ai dettagli e orientato alla qualità, eccello nella gestione del tempo e nel project management. La mia esperienza come cameriere e aiuto barman mi ha reso flessibile e adattabile, qualità che applico anche nel design.</p>
                 <p>Offro un servizio serio, curato e accogliente, sempre pronto ad ascoltare e trasformare le idee in soluzioni efficaci. 🚀</p>
@@ -82,7 +82,7 @@
             </div>
             
             <div id="section3" class="section">
-                <h2>I miei valori e come lavoro</h2>
+                <h2>I miei valori</h2>
                 <p>Il mio approccio al design si basa su:</p>
                 <ul>
                     <li><strong>Precisione matematica:</strong> Ogni elemento è posizionato con cura e attenzione ai dettagli</li>
@@ -93,7 +93,7 @@
             </div>
             
             <div id="section4" class="section">
-                <h2>I miei lavori</h2>
+                <h2>Portfolio</h2>
                 <div class="portfolio-grid">
                     <!-- Qui andranno i tuoi progetti con immagini e descrizioni -->
                     <p>Portfolio in aggiornamento... Presto disponibili i miei lavori più recenti!</p>
@@ -118,4 +118,113 @@
                         <p>Parliamo del tuo progetto e scopri come posso aiutarti!</p>
                         
                         <form id="callForm" action="#" method="POST" class="call-form">
-                            <div cl
+                            <div class="form-group">
+                                <label for="name">Nome e Cognome *</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">Telefono</label>
+                                <input type="tel" id="phone" name="phone">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="projectType">Tipo di progetto *</label>
+                                <select id="projectType" name="projectType" required>
+                                    <option value="">Seleziona un'opzione</option>
+                                    <option value="brand">Brand Identity / Logo</option>
+                                    <option value="web">UI/UX Design</option>
+                                    <option value="social">Social Media Graphics</option>
+                                    <option value="print">Materiale Stampato</option>
+                                    <option value="illustration">Illustrazioni</option>
+                                    <option value="other">Altro</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message">Descrivi brevemente il tuo progetto *</label>
+                                <textarea id="message" name="message" rows="4" required></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="preferredTime">Orario preferito per la chiamata</label>
+                                <select id="preferredTime" name="preferredTime">
+                                    <option value="">Seleziona un'opzione</option>
+                                    <option value="morning">Mattina (9:00 - 12:00)</option>
+                                    <option value="afternoon">Pomeriggio (14:00 - 17:00)</option>
+                                    <option value="evening">Sera (18:00 - 20:00)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group privacy-checkbox">
+                                <input type="checkbox" id="privacy" name="privacy" required>
+                                <label for="privacy">Accetto la privacy policy e il trattamento dei miei dati personali *</label>
+                            </div>
+                            
+                            <button type="submit" class="submit-btn">Prenota la tua chiamata gratuita</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navbar = document.getElementById('navbar');
+            const navbarToggle = document.getElementById('navbarToggle');
+            const navbarNav = document.getElementById('navbarNav');
+            
+            // Toggle menu su dispositivi mobili
+            navbarToggle.addEventListener('click', function() {
+                navbarNav.classList.toggle('show');
+            });
+            
+            // Chiudi menu quando si clicca su un link
+            const navLinks = document.querySelectorAll('.navbar-nav a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    navbarNav.classList.remove('show');
+                });
+            });
+            
+            // Aggiorna classe active sul link corrente
+            window.addEventListener('scroll', function() {
+                let scrollPosition = window.scrollY + 100;
+                
+                document.querySelectorAll('.section').forEach(section => {
+                    let sectionTop = section.offsetTop;
+                    let sectionHeight = section.offsetHeight;
+                    let sectionId = section.getAttribute('id');
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        document.querySelectorAll('.navbar-nav a').forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === '#' + sectionId) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            });
+            
+            // Form submission handling
+            const callForm = document.getElementById('callForm');
+            if (callForm) {
+                callForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    // Qui andrebbe il codice per gestire l'invio del form
+                    // Per ora mostriamo solo un alert
+                    alert('Grazie per la tua richiesta! Ti contatterò presto per fissare la nostra chiamata.');
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
