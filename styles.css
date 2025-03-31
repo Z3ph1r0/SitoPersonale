@@ -10,99 +10,61 @@ body {
     color: #333;
     background-color: #f8f9fa;
     overflow-x: hidden;
+    padding-top: 70px; /* Spazio per la navbar fissa */
 }
 
 .container {
-    display: flex;
+    width: 100%;
 }
 
-/* Sidebar */
-.sidebar {
-    width: 250px;
-    height: 100vh;
+/* Navbar principale (ex-sidebar) */
+.navbar {
+    width: 100%;
+    height: 70px;
     background-color: #000000;
-    padding: 20px;
     position: fixed;
     top: 0;
     left: 0;
-    overflow-y: auto;
     z-index: 1000;
     transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.sidebar.collapsed {
-    width: 60px;
-    padding: 20px 5px;
-}
-
-.sidebar-header {
-    position: relative;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #dee2e6;
-}
-
-.sidebar h2 {
-    color: #ffffff;
-    font-size: 1.4rem;
-    transition: opacity 0.3s;
-}
-
-.sidebar .full-title {
-    opacity: 1;
-    transition: opacity 0.3s;
-}
-
-.sidebar.collapsed .full-title {
-    opacity: 0;
-    display: none;
-}
-
-.sidebar .short-title {
-    position: absolute;
-    top: 0;
-    left: 10px;
-    opacity: 0;
-    display: none;
-    transition: opacity 0.3s;
-}
-
-.sidebar.collapsed .short-title {
-    opacity: 1;
-    display: block;
-}
-
-.toggle-btn {
-    position: absolute;
-    top: 20px;
-    right: -15px;
-    background: #ffffff;
-    border: none;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
+.navbar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    z-index: 1001;
-    transition: right 0.3s ease;
+    justify-content: space-between;
+    padding: 0 20px;
 }
 
-.sidebar.collapsed .toggle-btn {
-    right: -15px;
+.navbar-brand {
+    display: flex;
+    align-items: center;
 }
 
-.sidebar ul {
+.navbar-brand h2 {
+    color: #ffffff;
+    font-size: 1.4rem;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.navbar-nav {
+    display: flex;
     list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-.sidebar ul li {
-    margin-bottom: 15px;
+.navbar-nav li {
+    margin: 0 10px;
 }
 
-.sidebar ul li a {
+.navbar-nav li a {
     color: #ffffff;
     text-decoration: none;
     display: flex;
@@ -111,49 +73,37 @@ body {
     border-radius: 5px;
     transition: all 0.3s ease;
     font-weight: 500;
-    white-space: nowrap;
-    overflow: hidden;
+    font-family: 'Source Code Pro', monospace;
 }
 
-.sidebar ul li a i {
+.navbar-nav li a i {
     font-size: 1.2rem;
-    min-width: 30px;
+    margin-right: 8px;
     text-align: center;
-    margin-right: 10px;
 }
 
-.sidebar.collapsed ul li a i {
-    margin-right: 0;
-    font-size: 1.4rem;
-}
-
-.sidebar.collapsed ul li a .link-text {
-    opacity: 0;
-    width: 0;
-    margin-left: 0;
-}
-
-.sidebar ul li a .link-text {
-    transition: opacity 0.3s, width 0.3s, margin-left 0.3s;
-}
-
-.sidebar ul li a:hover, 
-.sidebar ul li a.active {
+.navbar-nav li a:hover, 
+.navbar-nav li a.active {
     background-color: #ffffff;
     color: #000000;
 }
 
-/* Main Content */
-.main-content {
-    margin-left: 250px;
-    padding: 40px;
-    width: calc(100% - 250px);
-    transition: margin-left 0.3s, width 0.3s;
+.navbar-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 1.5rem;
+    cursor: pointer;
 }
 
-.main-content.expanded {
-    margin-left: 60px;
-    width: calc(100% - 60px);
+/* Main Content */
+.main-content {
+    width: 100%;
+    padding: 40px;
+    transition: all 0.3s;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .section {
@@ -171,6 +121,9 @@ body {
     padding-bottom: 10px;
     border-bottom: 2px solid #f0f0f0;
     font-size: 1.8rem;
+    font-family: 'Anton', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .section p {
@@ -185,6 +138,13 @@ body {
 
 .section ul li {
     margin-bottom: 10px;
+}
+
+.section h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
 }
 
 /* Portfolio Grid */
@@ -225,127 +185,7 @@ body {
     text-decoration: underline;
 }
 
-/* Responsive */
-@media (max-width: 992px) {
-    .sidebar {
-        width: 60px;
-        padding: 20px 5px;
-    }
-    
-    .sidebar .full-title {
-        opacity: 0;
-        display: none;
-    }
-    
-    .sidebar .short-title {
-        opacity: 1;
-        display: block;
-    }
-    
-    .sidebar ul li a .link-text {
-        opacity: 0;
-        width: 0;
-        margin-left: 0;
-    }
-    
-    .sidebar ul li a i {
-        margin-right: 0;
-        font-size: 1.4rem;
-    }
-    
-    .main-content {
-        margin-left: 60px;
-        width: calc(100% - 60px);
-        padding: 20px;
-    }
-}
-
-@media (max-width: 768px) {
-    .sidebar {
-        width: 50px;
-        padding: 15px 5px;
-    }
-    
-    .sidebar .short-title {
-        font-size: 1.2rem;
-    }
-    
-    .sidebar ul li a i {
-        font-size: 1.2rem;
-    }
-    
-    .toggle-btn {
-        width: 24px;
-        height: 24px;
-        font-size: 0.8rem;
-    }
-    
-    .main-content {
-        margin-left: 50px;
-        width: calc(100% - 50px);
-        padding: 15px;
-    }
-    
-    .section {
-        padding: 15px;
-        margin-bottom: 30px;
-    }
-    
-    .section h2 {
-        font-size: 1.5rem;
-    }
-}
-
-    #section5 {
-        background-color: #000000;
-    }
-
-@media (max-width: 576px) {
-    .sidebar {
-        width: 45px;
-        padding: 10px 3px;
-    }
-    
-    .sidebar .short-title {
-        font-size: 1rem;
-    }
-    
-    .sidebar ul li {
-        margin-bottom: 10px;
-    }
-    
-    .sidebar ul li a {
-        padding: 5px;
-    }
-    
-    .sidebar ul li a i {
-        font-size: 1.1rem;
-    }
-    
-    .toggle-btn {
-        display: none;
-    }
-    
-    .main-content {
-        margin-left: 45px;
-        width: calc(100% - 45px);
-        padding: 10px;
-    }
-    
-    .section {
-        padding: 12px;
-        margin-bottom: 20px;
-    }
-    
-    .section h2 {
-        font-size: 1.3rem;
-        margin-bottom: 15px;
-    }
-    
-    .section p {
-        font-size: 0.9rem;
-    }
-    /* Stili per la sezione contatti con form */
+/* Stili per la sezione contatti con form */
 .contact-container {
     display: flex;
     flex-wrap: wrap;
@@ -413,19 +253,108 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s;
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 1px;
     width: 100%;
     margin-top: 1rem;
+    font-size: 1.2rem;
 }
 
 .submit-btn:hover {
     background: #555;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .contact-container {
-        flex-direction: column;
+#section5 {
+    background-color: #000000;
+    color: white;
+}
+
+#section5 h2, #section5 h3 {
+    color: white;
+    border-color: #333;
+}
+
+#section5 .contact-info li i,
+#section5 .contact-info li a {
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .navbar-nav .link-text {
+        display: none;
+    }
+    
+    .navbar-nav li a i {
+        margin-right: 0;
+        font-size: 1.4rem;
+    }
+    
+    .main-content {
+        padding: 20px;
     }
 }
+
+@media (max-width: 768px) {
+    .navbar-nav {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background-color: #000;
+        flex-direction: column;
+        padding: 10px 0;
+    }
+    
+    .navbar-nav.show {
+        display: flex;
+    }
+    
+    .navbar-nav li {
+        width: 100%;
+        margin: 0;
+    }
+    
+    .navbar-nav li a {
+        padding: 12px 20px;
+        border-radius: 0;
+        width: 100%;
+    }
+    
+    .navbar-nav li a .link-text {
+        display: inline;
+    }
+    
+    .navbar-toggle {
+        display: block;
+    }
+    
+    .main-content {
+        padding: 15px;
+    }
+    
+    .section {
+        padding: 15px;
+        margin-bottom: 30px;
+    }
+    
+    .section h2 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand h2 {
+        font-size: 1.2rem;
+    }
+    
+    .main-content {
+        padding: 10px;
+    }
+    
+    .section {
+        padding: 12px;
+        margin-bottom: 20px;
+    }
 }
