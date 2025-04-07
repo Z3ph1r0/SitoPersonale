@@ -3,8 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
@@ -14,7 +15,7 @@
 </head>
 
 <body>
-    <!-- Navbar principale (ex-sidebar) -->
+    <!-- Navbar principale -->
     <nav class="navbar" id="navbar">
         <div class="navbar-inner">
             <div class="navbar-brand">
@@ -47,7 +48,7 @@
                 <li>
                     <a href="#section4" title="Portfolio">
                         <i class="fas fa-briefcase"></i>
-                        <span class="link-text">I miei lavori</span>
+                        <span class="link-text">I miei progetti</span>
                     </a>
                 </li>
                 <li>
@@ -64,7 +65,8 @@
         <div class="main-content" id="mainContent">
             <div id="section1" class="section">
                 <h2>Ciao, io sono Federico!</h2>
-                <p>Sono un Graphic Designer con una doppia anima: analitica e creativa. Ho un background di studi matematici, ma ho scelto di seguire la mia passione per il digitale, unendo precisione e originalità nei miei progetti.</p>
+                <img src="IMG/Foto profilo.png" alt="La mia foto profilo, alle spalle ho dei cigliegi in fiore" class="img-sinistra">
+                <p>Sono un Graphic Designer con una doppia anima: analitica e creativa. Ho un background di studi scientifici, ma ho scelto di seguire la mia passione per il digitale, unendo precisione e originalità nei miei progetti.</p>
                 <p>Attento ai dettagli e orientato alla qualità, eccello nella gestione del tempo e nel project management. La mia esperienza come cameriere e aiuto barman mi ha reso flessibile e adattabile, qualità che applico anche nel design.</p>
                 <p>Offro un servizio serio, curato e accogliente, sempre pronto ad ascoltare e trasformare le idee in soluzioni efficaci. 🚀</p>
             </div>
@@ -93,11 +95,65 @@
             </div>
             
             <div id="section4" class="section">
-                <h2>Portfolio</h2>
-                <div class="portfolio-grid">
-                    <!-- Qui andranno i tuoi progetti con immagini e descrizioni -->
-                    <p>Portfolio in aggiornamento... Presto disponibili i miei lavori più recenti!</p>
+                <h2>I miei progetti</h2>
+<!-- Carosello Portfolio -->
+<div class="portfolio-carousel-container">
+    <div class="portfolio-carousel">
+        <div class="carousel-track" id="carouselTrack">
+            <div class="carousel-slide">
+                <img src="Tarocchi/1.png" alt="Tarocco del Matto" class="carousel-image">
+                <div class="carousel-caption">
+                    <h3>Tarocco del Matto</h3>
+                    <p>Carta ispirata al videogioco Dark Souls 1</p>
                 </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="Tarocchi/2.png" alt="Tarocco della Papessa" class="carousel-image">
+                <div class="carousel-caption">
+                    <h3>Tarocco della Papessa</h3>
+                    <p>Carta ispirata al videogioco Dark Souls 3</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="Tarocchi/3.png" alt="Tarocco dell'Imperatore" class="carousel-image">
+                <div class="carousel-caption">
+                    <h3>Tarocco dell'Imperatore</h3>
+                    <p>Carta ispirata al videogioco Dark Souls 1</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="Tarocchi/4.png" alt="Tarocco degli Amanti" class="carousel-image">
+                <div class="carousel-caption">
+                    <h3>Tarocco degli Amanti</h3>
+                    <p>Carta ispirata al videogioco Dark Souls 3</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="Tarocchi/5.png" alt="Tarocco del Carro" class="carousel-image">
+                <div class="carousel-caption">
+                    <h3>Tarocco del Carro</h3>
+                    <p>Carta ispirata al videogioco Dark Souls 3</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="Tarocchi/6.png" alt="Tarocco del Sole" class="carousel-image">
+                <div class="carousel-caption">
+                    <h3>Tarocco del Sole</h3>
+                    <p>Carta ispirata al videogioco Dark Souls 1</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="carousel-controls">
+        <button class="carousel-control prev" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
+        <div class="carousel-indicators">
+            <span class="indicator active" data-slide="0"></span>
+            <span class="indicator" data-slide="1"></span>
+        </div>
+        <button class="carousel-control next" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
+    </div>
+</div>
             </div>
             
             <div id="section5" class="section">
@@ -181,58 +237,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const navbar = document.getElementById('navbar');
-            const navbarToggle = document.getElementById('navbarToggle');
-            const navbarNav = document.getElementById('navbarNav');
-            
-            // Toggle menu su dispositivi mobili
-            navbarToggle.addEventListener('click', function() {
-                navbarNav.classList.toggle('show');
-            });
-            
-            // Chiudi menu quando si clicca su un link
-            const navLinks = document.querySelectorAll('.navbar-nav a');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    navbarNav.classList.remove('show');
-                });
-            });
-            
-            // Aggiorna classe active sul link corrente
-            window.addEventListener('scroll', function() {
-                let scrollPosition = window.scrollY + 100;
-                
-                document.querySelectorAll('.section').forEach(section => {
-                    let sectionTop = section.offsetTop;
-                    let sectionHeight = section.offsetHeight;
-                    let sectionId = section.getAttribute('id');
-                    
-                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                        document.querySelectorAll('.navbar-nav a').forEach(link => {
-                            link.classList.remove('active');
-                            if (link.getAttribute('href') === '#' + sectionId) {
-                                link.classList.add('active');
-                            }
-                        });
-                    }
-                });
-            });
-            
-            // Form submission handling
-            const callForm = document.getElementById('callForm');
-            if (callForm) {
-                callForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    // Qui andrebbe il codice per gestire l'invio del form
-                    // Per ora mostriamo solo un alert
-                    alert('Grazie per la tua richiesta! Ti contatterò presto per fissare la nostra chiamata.');
-                });
-            }
-        });
-    </script>
 </body>
 
 </html>
