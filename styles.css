@@ -135,12 +135,14 @@ body {
 }
 
 .section h2 {
+    font-optical-sizing: auto;
     color: #000;
     margin-bottom: 20px;
     padding-bottom: 10px;
     border-bottom: 2px solid #f0f0f0;
     font-size: 1.8rem;
-    font-family: "Quicksand", sans-serif;
+    font-family: "Lexend", sans-serif;
+    font-style: normal;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
