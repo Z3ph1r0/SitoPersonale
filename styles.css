@@ -175,6 +175,53 @@ body {
     cursor: pointer;
 }
 
+/* Più spazio tra icone e testo nel menu mobile */
+@media (max-width: 768px) {
+    .navbar-nav li a i {
+        margin-right: 15px;
+        min-width: 20px;
+        text-align: center;
+    }
+}
+
+/* Stile per il pulsante contatti fisso */
+.contact-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #000000;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 700;
+    font-family: "LEMONMILK", sans-serif;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.contact-button:hover {
+    background-color: #333;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+.contact-button i {
+    margin-right: 8px;
+    font-size: 1.1rem;
+}
+
+/* Versione mobile del pulsante - più compatta */
+@media (max-width: 768px) {
+    .contact-button {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+}
+
 /* Main Content */
 .main-content {
     width: 100%;

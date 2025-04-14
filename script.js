@@ -314,4 +314,26 @@ document.addEventListener('DOMContentLoaded', function() {
             this.reset();
         });
     }
+// Gestione del pulsante contatti fisso
+document.addEventListener('DOMContentLoaded', function() {
+    const contactButton = document.getElementById('contactButton');
+    
+    if (contactButton) {
+        contactButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetSection = document.getElementById('section5');
+            if (targetSection) {
+                // Scroll fluido alla sezione contatti
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+                
+                // Focus sul primo campo del form dopo lo scroll
+                setTimeout(function() {
+                    const nameInput = document.getElementById('name');
+                    if (nameInput) nameInput.focus();
+                }, 1000);
+            }
+        });
+    }
+});
 });
