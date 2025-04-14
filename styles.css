@@ -35,9 +35,9 @@ body {
     font-weight: 400;
     font-style: normal;
     line-height: 1.6;
-    color: #333;
+    color: #000000;
     /* Rimuovo background-color: #f8f9fa; e aggiungo l'immagine di sfondo */
-    background-image: url(IMG/Sfondo.jpg);
+    background-image: url(IMG/Sfondo\ fr_Tavola\ disegno\ 1-01.png);
     background-repeat: repeat; /* fa ripetere l'immagine se necessario */
     background-size:contain; /* mantiene le dimensioni originali dell'immagine */
     /* oppure puoi usare background-size: cover; per coprire tutto lo schermo */
@@ -714,7 +714,7 @@ body {
 
 #section5 h2, #section5 h3 {
     color: white;
-    border-color: #333;
+    border-color: #000000;
 }
 
 #section5 .contact-info li i,
