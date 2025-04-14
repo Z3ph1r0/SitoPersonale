@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         let currentPosition = 0;
         const slideCount = slides.length;
-        const visibleSlides = 3;
+        const visibleSlides = window.innerWidth < 576 ? 1 : window.innerWidth < 992 ? 2 : 3;
         const maxPosition = Math.ceil(slideCount / visibleSlides) - 1;
         
         // Update indicators to match the number of pages
@@ -151,8 +151,167 @@ document.addEventListener('DOMContentLoaded', function() {
                 updateCarousel();
             }
         }
+        
+        // Aggiorna il carosello quando la finestra viene ridimensionata
+        window.addEventListener('resize', function() {
+            const newVisibleSlides = window.innerWidth < 576 ? 1 : window.innerWidth < 992 ? 2 : 3;
+            if (newVisibleSlides !== visibleSlides) {
+                location.reload(); // Ricaricare la pagina è più semplice che ricalcolare tutto
+            }
+        });
     }
     
     // Chiama la funzione per inizializzare il carosello
     initCarousel();
+    
+    // Crea il modal per le immagini
+    let imageModal = document.getElementById('imageModal');
+    if (!imageModal) {
+        // Crea il modal e lo aggiunge al body
+        imageModal = document.createElement('div');
+        imageModal.id = 'imageModal';
+        imageModal.className = 'modal';
+        imageModal.innerHTML = `
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <img id="modalImage" src="" alt="Immagine ingrandita">
+                <div id="modalCaption" class="modal-caption"></div>
+            </div>
+        `;
+        document.body.appendChild(imageModal);
+    }
+    
+    // Riferimenti agli elementi del modal
+    const modalImg = document.getElementById('modalImage');
+    const modalCaption = document.getElementById('modalCaption');
+    const closeModalBtn = document.querySelector('.close-modal');
+    
+    // Funzione per chiudere il modal
+    function closeImageModal() {
+        imageModal.classList.remove('show');
+        setTimeout(() => {
+            imageModal.style.display = 'none';
+        }, 300);
+        
+        // Ripristina lo scroll della pagina
+        document.body.style.overflow = '';
+    }
+    
+    // Chiudi il modal quando si fa clic sulla X
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', closeImageModal);
+    }
+    
+    // Chiudi il modal quando si fa clic al di fuori dell'immagine
+    imageModal.addEventListener('click', function(event) {
+        if (event.target === imageModal) {
+            closeImageModal();
+        }
+    });
+    
+    // Chiudi il modal con il tasto ESC
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && imageModal.classList.contains('show')) {
+            closeImageModal();
+        }
+    });
+    
+    // Gestisci i click sulle immagini nella sezione servizi
+    const servizioImmagini = document.querySelectorAll('.servizio-immagine');
+    servizioImmagini.forEach(function(servizioItem) {
+        // Aggiungi il cursore pointer per indicare che è cliccabile
+        servizioItem.style.cursor = 'pointer';
+        
+        // Aggiungi l'evento click
+        servizioItem.addEventListener('click', function() {
+            // Ottieni l'URL dell'immagine dalla sorgente dell'immagine o dall'attributo data-img
+            const imgSrc = this.getAttribute('data-img') || this.querySelector('img').src;
+            
+            // Ottieni il titolo e la descrizione dall'overlay
+            const overlay = this.querySelector('.servizio-overlay');
+            let title = '';
+            let desc = '';
+            
+            if (overlay) {
+                const titleElement = overlay.querySelector('h3');
+                const descElement = overlay.querySelector('p');
+                
+                if (titleElement) title = titleElement.textContent;
+                if (descElement) desc = descElement.textContent;
+            }
+            
+            // Imposta i valori nel modal
+            modalImg.src = imgSrc;
+            modalCaption.innerHTML = title ? `<h3>${title}</h3>` : '';
+            if (desc) {
+                modalCaption.innerHTML += `<p>${desc}</p>`;
+            }
+            
+            // Mostra il modal con animazione
+            imageModal.style.display = 'flex';
+            setTimeout(() => {
+                imageModal.classList.add('show');
+            }, 10);
+            
+            // Blocca lo scroll della pagina
+            document.body.style.overflow = 'hidden';
+        });
+    });
+    
+    // Gestisci anche i click sulle immagini nel carosello portfolio
+    const portfolioImmagini = document.querySelectorAll('.carousel-slide');
+    portfolioImmagini.forEach(function(slide) {
+        const img = slide.querySelector('img');
+        const caption = slide.querySelector('.carousel-caption');
+        
+        if (img) {
+            // Aggiungi il cursore pointer
+            img.style.cursor = 'pointer';
+            
+            img.addEventListener('click', function(e) {
+                e.stopPropagation(); // Impedisce che l'evento si propaghi al carosello
+                
+                // Ottieni l'URL dell'immagine
+                const imgSrc = this.src;
+                
+                // Prepara il contenuto del caption
+                let captionHTML = '';
+                if (caption) {
+                    const titleElement = caption.querySelector('h3');
+                    const descElement = caption.querySelector('p');
+                    
+                    if (titleElement) captionHTML += `<h3>${titleElement.textContent}</h3>`;
+                    if (descElement) captionHTML += `<p>${descElement.textContent}</p>`;
+                }
+                
+                // Imposta i valori nel modal
+                modalImg.src = imgSrc;
+                modalCaption.innerHTML = captionHTML;
+                
+                // Mostra il modal con animazione
+                imageModal.style.display = 'flex';
+                setTimeout(() => {
+                    imageModal.classList.add('show');
+                }, 10);
+                
+                // Blocca lo scroll della pagina
+                document.body.style.overflow = 'hidden';
+            });
+        }
+    });
+    
+    // Gestione del form di contatto
+    const callForm = document.getElementById('callForm');
+    if (callForm) {
+        callForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Qui puoi aggiungere la logica per inviare i dati del form
+            // Ad esempio, usando fetch per inviare i dati a un server
+            
+            // Per ora mostreremo solo un alert di conferma
+            alert('Grazie per aver inviato la richiesta! Ti contatteremo presto.');
+            this.reset();
+        });
+    }
 });
