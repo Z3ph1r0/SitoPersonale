@@ -65,15 +65,17 @@ body {
 }
 
 .profile-image {
-    width: 100%;
+    width: 70%;
     height: auto;
+    display: block;
+    margin: 0 auto;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .profile-image:hover {
-    transform: scale(1.02);
+    transform: scale(1.25);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
@@ -115,6 +117,12 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 0 20px;
+}
+
+.logo-navbar {
+    height: 40px;
+    width: auto;
+    margin-right: 10px;
 }
 
 .navbar-brand {
