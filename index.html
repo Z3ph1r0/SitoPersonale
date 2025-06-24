@@ -3,17 +3,46 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
-    <meta name ="description" content ="Scopri il portfolio di Federico Rozzoni: graphic designer creativo a Oleggio. Progetti grafici, branding e illustrazione, prova il tuo prossimo stile!">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Federico Rozzoni Graphics</title>
+    <meta name="description" content="Scopri il portfolio di Federico Rozzoni: graphic designer creativo a Oleggio. Progetti grafici, branding e illustrazione, prova il tuo prossimo stile!">
+    
+    <!-- CRITICAL: Preconnect per risorse esterne -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- CRITICAL: Preload risorse critiche -->
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="preload" href="IMG/Logo Sito 2.png" as="image">
+    <link rel="preload" href="IMG/Foto profilo.png" as="image">
+    
+    <!-- CSS critico inline (da estrarre dal tuo styles.css) -->
+    <style>
+        /* CSS CRITICO ABOVE-THE-FOLD - inserisci qui solo gli stili per navbar e prima sezione */
+        body { margin: 0; font-family: 'Source Code Pro', monospace; }
+        .navbar { /* inserisci stili navbar critici */ }
+        .container { /* inserisci stili container critici */ }
+        #section1 { /* inserisci stili prima sezione critici */ }
+        /* Aggiungi solo gli stili necessari per il rendering iniziale */
+    </style>
+    
+    <!-- CSS non critico - caricato in modo asincrono -->
+    <link rel="stylesheet" href="styles.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="styles.css"></noscript>
+    
+    <!-- Font con display swap per evitare FOIT -->
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- JavaScript con defer -->
+    <script src="script.js" defer></script>
+    
+    <!-- Font Awesome con defer -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'">
+    
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="IMG/Logo Sito 2.png">
-    <link rel="shortcut icon" href="favicon.ico" type="IMG/Logo Sito 2.png">
-    <title>Federico Rozzoni Graphics</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -218,12 +247,54 @@
                         </ul>
                         
                         <div class="map-container">
-                            <h3>Dove lavoro</h3>
-                            <p>Sono situato a Oleggio, in provincia di Novara:</p>
-                            <div class="map-wrapper">
-                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d22419.55057478875!2d8.633857639550783!3d45.59775!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47865da936a446d1%3A0x13070c2ddcc1ae6e!2s28047%20Oleggio%20NO!5e0!3m2!1sit!2sit!4v1711898428626!5m2!1sit!2sit" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                            </div>
-                        </div>
+    <h3>Dove lavoro</h3>
+    <p>Sono situato a Oleggio, in provincia di Novara:</p>
+    
+    <!-- Informazioni di contatto in formato testo per SEO -->
+    <div class="location-details">
+        <address>
+            <strong>Federico Rozzoni Graphics</strong><br>
+            Oleggio, 28047<br>
+            Provincia di Novara, Piemonte<br>
+            Italia
+        </address>
+        <p>La mia zona di lavoro copre tutto il territorio di Novara, Milano e zone limitrofe. Sono facilmente raggiungibile sia in auto che con i mezzi pubblici.</p>
+    </div>
+    
+    <div class="map-wrapper">
+        <!-- Iframe ottimizzato SEO -->
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d22419.55057478875!2d8.633857639550783!3d45.59775!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47865da936a446d1%3A0x13070c2ddcc1ae6e!2s28047%20Oleggio%20NO!5e0!3m2!1sit!2sit!4v1711898428626!5m2!1sit!2sit" 
+            width="100%" 
+            height="300" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Mappa interattiva di Oleggio (NO) - Sede di Federico Rozzoni Graphics"
+            aria-label="Mappa che mostra la posizione di Oleggio in provincia di Novara, dove si trova Federico Rozzoni Graphics"
+            name="mappa-oleggio">
+        </iframe>
+        
+        <!-- Fallback testuale per accessibilità -->
+        <noscript>
+            <p>Per visualizzare la mappa interattiva, abilita JavaScript nel tuo browser o 
+            <a href="https://www.google.com/maps/place/28047+Oleggio+NO/" target="_blank" rel="noopener">
+                visualizza Oleggio su Google Maps
+            </a></p>
+        </noscript>
+    </div>
+    
+    <!-- Link alternativo per chi preferisce aprire direttamente Google Maps -->
+    <p class="map-link">
+        <a href="https://www.google.com/maps/place/28047+Oleggio+NO/" 
+           target="_blank" 
+           rel="noopener"
+           title="Apri Oleggio su Google Maps in una nuova finestra">
+            📍 Visualizza su Google Maps
+        </a>
+    </p>
+</div>
                     </div>
                     
                     <div class="contact-form-column">

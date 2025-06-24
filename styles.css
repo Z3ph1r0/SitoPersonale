@@ -1,19 +1,28 @@
-html {
-    scroll-padding-top: 80px; /* Un po' più dei 70px della navbar */
-    scroll-behavior: smooth;
-  }
-  
+/* ==========================================================================
+   RESET E CONFIGURAZIONE BASE
+   ========================================================================== */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+html {
+    scroll-padding-top: 80px;
+    scroll-behavior: smooth;
+}
+
+/* ==========================================================================
+   FONT FACES - OTTIMIZZATI PER TTI
+   ========================================================================== */
+
 @font-face {
     font-family: 'LEMONMILK';
     src: url('/fonts/LEMONMILK-Regular.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
+    font-display: swap; /* TTI: Evita FOIT */
 }
 
 @font-face {
@@ -21,6 +30,7 @@ html {
     src: url('/fonts/LEMONMILK-Medium.otf') format('opentype');
     font-weight: 500;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -28,24 +38,181 @@ html {
     src: url('/fonts/LEMONMILK-Bold.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
+    font-display: swap;
 }
+
+/* ==========================================================================
+   STILI BASE BODY
+   ========================================================================== */
 
 body {
-    font-family: "LEMONMILK", sans-serif;
+    font-family: "LEMONMILK", Arial, sans-serif; /* Fallback più veloce */
     font-weight: 400;
-    font-style: normal;
     line-height: 1.6;
-    color: #000000;
-    /* Rimuovo background-color: #f8f9fa; e aggiungo l'immagine di sfondo */
-    background-image: url(IMG/Sfondo\ fr_Tavola\ disegno\ 1-01.png);
-    background-repeat: repeat; /* fa ripetere l'immagine se necessario */
-    background-size:contain; /* mantiene le dimensioni originali dell'immagine */
-    /* oppure puoi usare background-size: cover; per coprire tutto lo schermo */
+    color: #000;
+    background-color: #000000;
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
     overflow-x: hidden;
-    padding-top: 70px; /* Spazio per la navbar fissa */
+    padding-top: 70px;
 }
 
-/* Layout a due colonne per la sezione "Chi sono" */
+/* ==========================================================================
+   CLASSI UTILITY FONT - SEMPLIFICATE
+   ========================================================================== */
+
+.font-regular { font-weight: 400; }
+.font-medium { font-weight: 500; }
+.font-bold { font-weight: 700; }
+
+/* ==========================================================================
+   NAVBAR - OTTIMIZZATA
+   ========================================================================== */
+
+.navbar {
+    width: 100%;
+    height: 70px;
+    background: #000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    /* TTI: Ridotta complessità transizione */
+    transition: transform 0.3s ease;
+}
+
+.navbar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand h2 {
+    color: #fff;
+    font-size: 1.4rem;
+    font-family: Arial, sans-serif; /* TTI: Font di sistema per navbar */
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.logo-navbar {
+    height: 40px;
+    width: auto;
+    margin-right: 10px;
+}
+
+.navbar-nav {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-nav li {
+    margin: 0 10px;
+}
+
+.navbar-nav li a {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+    border-radius: 5px;
+    /* TTI: Transizione semplificata */
+    transition: background-color 0.2s ease;
+    font-weight: 700;
+    font-family: Arial, sans-serif;
+}
+
+.navbar-nav li a i {
+    font-size: 1.2rem;
+    margin-right: 8px;
+    text-align: center;
+}
+
+.navbar-nav li a:hover, 
+.navbar-nav li a.active {
+    background: #fff;
+    color: #000;
+}
+
+.navbar-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   LAYOUT PRINCIPALE
+   ========================================================================== */
+
+.main-content {
+    width: 100%;
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section {
+    min-height: 400px;
+    margin-bottom: 50px;
+    padding: 30px;
+    background: #fff;
+    border-radius: 8px;
+    /* TTI: Box-shadow semplificata */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.section h2 {
+    color: #000;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.section h3 {
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
+}
+
+.section p {
+    margin-bottom: 15px;
+    font-size: 1rem;
+}
+
+.section ul {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.section ul li {
+    margin-bottom: 10px;
+}
+
+/* ==========================================================================
+   LAYOUT A DUE COLONNE
+   ========================================================================== */
+
 .two-column-layout {
     display: flex;
     flex-wrap: wrap;
@@ -70,223 +237,27 @@ body {
     display: block;
     margin: 0 auto;
     border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* TTI: Box-shadow semplificata */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    /* TTI: Uso will-change solo su hover */
+    transition: transform 0.3s ease;
 }
 
 .profile-image:hover {
-    transform: scale(1.25);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    /* TTI: Scale ridotto per performance migliori */
+    transform: scale(1.05);
+    will-change: transform;
 }
 
-/* Responsive per layout a due colonne */
-@media (max-width: 768px) {
-    .two-column-layout {
-        flex-direction: column;
-    }
-    
-    .image-column {
-        max-width: 100%;
-    }
-    
-    .profile-image {
-        max-width: 200px;
-        margin: 0 auto 20px;
-        display: block;
-    }
+/* Reset will-change dopo l'animazione */
+.profile-image {
+    will-change: auto;
 }
 
-/* Navbar principale */
-.navbar {
-    width: 100%;
-    height: 70px;
-    background-color: #000000;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
+/* ==========================================================================
+   SEZIONE SERVIZI - OTTIMIZZATA
+   ========================================================================== */
 
-.navbar-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-}
-
-.logo-navbar {
-    height: 40px;
-    width: auto;
-    margin-right: 10px;
-}
-
-.navbar-brand {
-    display: flex;
-    align-items: center;
-}
-
-.navbar-brand h2 {
-    color: #ffffff;
-    font-size: 1.4rem;
-    font-family: Arial, Helvetica, sans-serif; /* Font classico sans-serif */
-    font-weight: 700;
-    letter-spacing: 1px;
-    margin: 0;
-}
-
-.navbar-nav {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.navbar-nav li {
-    margin: 0 10px;
-}
-
-.navbar-nav li a {
-    color: #ffffff;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    padding: 8px 10px;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-    font-weight: 700; /* Bold */
-    font-family: Arial, Helvetica, sans-serif; /* Font classico sans-serif */
-}
-
-.navbar-nav li a i {
-    font-size: 1.2rem;
-    margin-right: 8px;
-    text-align: center;
-}
-
-.navbar-nav li a:hover, 
-.navbar-nav li a.active {
-    background-color: #ffffff;
-    color: #000000;
-}
-
-.navbar-toggle {
-    display: none;
-    background: none;
-    border: none;
-    color: #ffffff;
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
-/* Più spazio tra icone e testo nel menu mobile */
-@media (max-width: 768px) {
-    .navbar-nav li a i {
-        margin-right: 30px;
-        min-width: 40px;
-        text-align: center;
-    }
-}
-
-/* Stile per il pulsante contatti fisso */
-.contact-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #000000;
-    color: white;
-    padding: 15px 20px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: 700;
-    font-family: "LEMONMILK", sans-serif;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    z-index: 999;
-    display: flex;
-    align-items: center;
-    transition: all 0.3s ease;
-}
-
-.contact-button:hover {
-    background-color: #000000;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
-}
-
-.contact-button i {
-    margin-right: 8px;
-    font-size: 1.1rem;
-}
-
-/* Versione mobile del pulsante - più compatta */
-@media (max-width: 768px) {
-    .contact-button {
-        padding: 10px 15px;
-        font-size: 0.9rem;
-    }
-}
-
-/* Main Content */
-.main-content {
-    width: 100%;
-    padding: 40px;
-    transition: all 0.3s;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.section {
-    min-height: 400px;
-    margin-bottom: 50px;
-    padding: 30px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-}
-
-.section h2 {
-    font-optical-sizing: auto;
-    color: #000;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #f0f0f0;
-    font-size: 1.8rem;
-    font-family: "LEMONMILK", sans-serif;
-    font-style: normal;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.section p {
-    margin-bottom: 15px;
-    font-size: 1rem;
-    font-family: "LEMONMILK", sans-serif;
-}
-
-.section ul {
-    margin-left: 20px;
-    margin-bottom: 20px;
-}
-
-.section ul li {
-    margin-bottom: 10px;
-    font-family: "LEMONMILK", sans-serif;
-}
-
-.section h3 {
-    font-family: "LEMONMILK", sans-serif;
-    font-weight: 700;
-    font-size: 1.5rem;
-    margin-bottom: 15px;
-    letter-spacing: 0.5px;
-}
-
-/* Stile per la sezione servizi */
 .servizi-container {
     display: flex;
     flex-direction: column;
@@ -298,19 +269,19 @@ body {
     width: 100%;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    /* TTI: Box-shadow semplificata */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 }
 
 .servizio-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px); /* TTI: Movimento ridotto */
 }
 
 .servizio-immagine {
     position: relative;
     width: 100%;
-    height: 300px; /* Altezza maggiore per immagini più grandi */
+    height: 300px;
     overflow: hidden;
     cursor: pointer;
 }
@@ -318,13 +289,13 @@ body {
 .servizio-immagine img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* L'immagine coprirà tutto lo spazio disponibile */
+    object-fit: cover;
     display: block;
-    transition: transform 0.5s ease;
+    transition: transform 0.3s ease;
 }
 
 .servizio-item:hover .servizio-immagine img {
-    transform: scale(1.05);
+    transform: scale(1.02); /* TTI: Scale molto ridotto */
 }
 
 .servizio-overlay {
@@ -333,7 +304,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.7); /* Sfondo nero semi-trasparente */
+    background: rgba(0, 0, 0, 0.7);
     color: white;
     padding: 2rem;
     display: flex;
@@ -346,7 +317,7 @@ body {
     margin-bottom: 1rem;
     color: white;
     font-size: 1.8rem;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* TTI: Text-shadow semplificato */
 }
 
 .servizio-overlay p {
@@ -356,7 +327,10 @@ body {
     line-height: 1.5;
 }
 
-/* Stili per il Modal */
+/* ==========================================================================
+   MODAL - OTTIMIZZATO
+   ========================================================================== */
+
 .modal {
     display: none;
     position: fixed;
@@ -366,7 +340,7 @@ body {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.9);
     opacity: 0;
     transition: opacity 0.3s ease;
 }
@@ -383,7 +357,13 @@ body {
     margin: auto;
     max-width: 90%;
     max-height: 90%;
-    animation: modalOpen 0.4s;
+    /* TTI: Animazione CSS invece di keyframe */
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+}
+
+.modal.show .modal-content {
+    transform: scale(1);
 }
 
 .modal-content img {
@@ -392,7 +372,8 @@ body {
     max-height: 80vh;
     margin: 0 auto;
     border-radius: 4px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    /* TTI: Box-shadow semplificata */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .close-modal {
@@ -414,66 +395,12 @@ body {
     padding: 15px;
     color: white;
     text-align: center;
-    font-family: "LEMONMILK", sans-serif;
     font-size: 1.1rem;
 }
 
-@keyframes modalOpen {
-    from {transform: scale(0.8); opacity: 0;}
-    to {transform: scale(1); opacity: 1;}
-}
-
-/* Responsive design */
-@media screen and (max-width: 992px) {
-    .servizio-immagine {
-        height: 250px;
-    }
-    
-    .servizio-overlay h3 {
-        font-size: 1.6rem;
-    }
-    
-    .servizio-overlay p {
-        font-size: 1rem;
-    }
-    
-    .modal-content {
-        max-width: 95%;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .servizio-immagine {
-        height: 200px;
-    }
-    
-    .servizio-overlay {
-        padding: 1.5rem;
-    }
-    
-    .servizio-overlay h3 {
-        font-size: 1.4rem;
-        margin-bottom: 0.5rem;
-    }
-}
-
-@media screen and (max-width: 576px) {
-    .servizio-immagine {
-        height: 180px;
-    }
-    
-    .servizio-overlay {
-        padding: 1rem;
-    }
-    
-    .servizio-overlay h3 {
-        font-size: 1.2rem;
-    }
-    
-    .servizio-overlay p {
-        font-size: 0.9rem;
-    }
-}
+/* ==========================================================================
+   PORTFOLIO CAROUSEL - OTTIMIZZATO
+   ========================================================================== */
 
 .portfolio-carousel-container {
     display: flex;
@@ -481,7 +408,7 @@ body {
     align-items: center;
     margin-top: 30px;
     width: 100%;
-    height: 100%
+    height: 100%;
 }
 
 .portfolio-carousel {
@@ -490,14 +417,16 @@ body {
     height: 400px;
     overflow: hidden;
     border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    /* TTI: Box-shadow semplificata */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     margin: 0 auto;
-    background-color: #f5f5f5;
+    background: #f5f5f5;
 }
 
 .carousel-track {
     display: flex;
-    transition: transform 0.5s ease;
+    /* TTI: Usa transform invece di left per performance */
+    transition: transform 0.4s ease;
     height: 100%;
     width: 100%;
 }
@@ -537,7 +466,6 @@ body {
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
     width: calc(100% - 10px);
-    font-family: "LEMONMILK", sans-serif;
 }
 
 .carousel-slide:hover .carousel-caption {
@@ -561,13 +489,13 @@ body {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background-color: #ccc;
+    background: #ccc;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
 .indicator.active {
-    background-color: #000;
+    background: #000;
 }
 
 .carousel-control {
@@ -581,36 +509,25 @@ body {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: background-color 0.3s;
 }
 
 .carousel-control:hover {
     background: #333;
 }
 
-/* Responsive adjustments for carousel */
-@media (max-width: 992px) {
-    .carousel-slide {
-        flex: 0 0 50%;
-        min-width: 50%;
-    }
-}
+/* ==========================================================================
+   DOWNLOAD PORTFOLIO
+   ========================================================================== */
 
-@media (max-width: 576px) {
-    .carousel-slide {
-        flex: 0 0 100%;
-        min-width: 100%;
-    }
-}
-
-/* Stile per la sezione download portfolio */
 .portfolio-download {
     margin-top: 2rem;
     text-align: center;
     padding: 1.5rem;
-    background-color: #f8f8f8;
+    background: #f8f8f8;
     border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    /* TTI: Box-shadow semplificata */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .portfolio-download p {
@@ -620,36 +537,30 @@ body {
 
 .download-btn {
     display: inline-block;
-    background-color: #000000;
+    background: #000;
     color: white;
     padding: 0.8rem 1.5rem;
     border-radius: 30px;
     text-decoration: none;
     font-weight: bold;
     transition: all 0.3s ease;
-    border: 2px solid #000000;
+    border: 2px solid #000;
 }
 
 .download-btn:hover {
-    background-color: white;
-    color: #000000;
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    background: white;
+    color: #000;
+    transform: translateY(-2px); /* TTI: Movimento ridotto */
 }
 
 .download-btn i {
     margin-right: 8px;
 }
 
-/* Responsive design per il bottone */
-@media (max-width: 768px) {
-    .download-btn {
-        padding: 0.7rem 1.2rem;
-        font-size: 0.9rem;
-    }
-}
+/* ==========================================================================
+   SEZIONE CONTATTI
+   ========================================================================== */
 
-/* Contact Section */
 .contact-info {
     list-style-type: none;
     margin-left: 0 !important;
@@ -659,7 +570,6 @@ body {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
-    font-family: "LEMONMILK", sans-serif;
 }
 
 .contact-info li i {
@@ -670,18 +580,16 @@ body {
 }
 
 .contact-info li a {
-    color: #000000;
+    color: #000;
     text-decoration: none;
     transition: color 0.3s ease;
-    font-family: "LEMONMILK", sans-serif;
 }
 
 .contact-info li a:hover {
-    color: #000;
+    color: #333;
     text-decoration: underline;
 }
 
-/* Contatti con form */
 .contact-container {
     display: flex;
     flex-wrap: wrap;
@@ -693,11 +601,14 @@ body {
     flex: 1 1 400px;
 }
 
+/* Form di contatto */
 .call-form {
     background: #f8f8f8;
     padding: 1.5rem;
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    /* TTI: Box-shadow semplificata */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    color: #000;
 }
 
 .form-group {
@@ -708,7 +619,6 @@ body {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 500;
-    font-family: "LEMONMILK", sans-serif;
 }
 
 .form-group input,
@@ -718,7 +628,6 @@ body {
     padding: 0.75rem;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-family: "LEMONMILK", sans-serif;
 }
 
 .form-group textarea {
@@ -739,11 +648,10 @@ body {
 .privacy-checkbox label {
     margin: 0;
     font-size: 0.9rem;
-    font-family: "LEMONMILK", sans-serif;
 }
 
 .submit-btn {
-    background: #000000;
+    background: #000;
     color: white;
     border: none;
     padding: 0.75rem 1.5rem;
@@ -751,7 +659,6 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s;
-    font-family: "LEMONMILK", sans-serif;
     letter-spacing: 1px;
     width: 100%;
     margin-top: 1rem;
@@ -759,28 +666,27 @@ body {
 }
 
 .submit-btn:hover {
-    background: #555;
+    background: #333;
 }
 
-#section5 {
-    background-color: #000000;
+/* Stile speciale per sezione contatti */
+.contact-section {
+    background: #000;
     color: white;
 }
 
-#section5 h2, #section5 h3 {
+.contact-section h2, 
+.contact-section h3 {
     color: white;
-    border-color: #000000;
+    border-color: #333;
 }
 
-#section5 .contact-info li i,
-#section5 .contact-info li a {
+.contact-section .contact-info li i,
+.contact-section .contact-info li a {
     color: white;
 }
 
-.call-form {
-    color: rgb(0, 0, 0);   
-}
-
+/* Mappa */
 .map-container {
     margin-top: 1.5rem;
 }
@@ -789,26 +695,54 @@ body {
     margin-top: 1rem;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    /* TTI: Box-shadow semplificata */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Classi di utilità per i pesi del font LEMONMILK */
-.lemonmilk-regular {
-    font-family: "LEMONMILK", sans-serif;
-    font-weight: 400;
-}
+/* ==========================================================================
+   PULSANTE CONTATTI FISSO
+   ========================================================================== */
 
-.lemonmilk-medium {
-    font-family: "LEMONMILK", sans-serif;
-    font-weight: 500;
-}
-
-.lemonmilk-bold {
-    font-family: "LEMONMILK", sans-serif;
+.contact-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #000;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 30px;
+    text-decoration: none;
     font-weight: 700;
+    /* TTI: Box-shadow semplificata */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
 }
 
-/* Responsive */
+.contact-button:hover {
+    background: #333;
+    transform: translateY(-2px); /* TTI: Movimento ridotto */
+}
+
+.contact-button i {
+    margin-right: 8px;
+    font-size: 1.1rem;
+}
+
+/* ==========================================================================
+   MEDIA QUERIES - OTTIMIZZATE E CONSOLIDATE
+   ========================================================================== */
+
+/* Desktop large */
+@media (max-width: 1200px) {
+    .main-content {
+        padding: 30px;
+    }
+}
+
+/* Tablet */
 @media (max-width: 992px) {
     .navbar-nav .link-text {
         display: none;
@@ -822,8 +756,18 @@ body {
     .main-content {
         padding: 20px;
     }
+    
+    .carousel-slide {
+        flex: 0 0 50%;
+        min-width: 50%;
+    }
+    
+    .servizio-immagine {
+        height: 250px;
+    }
 }
 
+/* Mobile */
 @media (max-width: 768px) {
     .navbar-nav {
         display: none;
@@ -831,7 +775,7 @@ body {
         top: 70px;
         left: 0;
         width: 100%;
-        background-color: #000;
+        background: #000;
         flex-direction: column;
         padding: 10px 0;
     }
@@ -855,6 +799,12 @@ body {
         display: inline;
     }
     
+    .navbar-nav li a i {
+        margin-right: 15px;
+        min-width: 25px;
+        text-align: center;
+    }
+    
     .navbar-toggle {
         display: block;
     }
@@ -865,21 +815,67 @@ body {
     
     .section {
         padding: 15px;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
+        min-height: auto;
     }
     
     .section h2 {
         font-size: 1.5rem;
     }
     
-    .carousel-controls {
-        margin-top: 10px;
+    .two-column-layout {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .image-column, 
+    .text-column {
+        min-width: 100%;
+        max-width: 100%;
+    }
+    
+    .profile-image {
+        width: 60%;
+        max-width: 180px;
+    }
+    
+    .servizio-immagine {
+        height: 200px;
+    }
+    
+    .contact-button {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+    
+    .contact-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .call-form {
+        padding: 1rem;
     }
 }
 
+/* Mobile small */
 @media (max-width: 576px) {
+    body {
+        font-size: 0.9rem;
+        padding-top: 60px;
+    }
+    
+    .navbar {
+        height: 60px;
+    }
+    
     .navbar-brand h2 {
-        font-size: 1.2rem;
+        font-size: 1rem;
+        display: none;
+    }
+    
+    .logo-navbar {
+        height: 35px;
     }
     
     .main-content {
@@ -888,6 +884,102 @@ body {
     
     .section {
         padding: 12px;
-        margin-bottom: 20px;
+    }
+    
+    .portfolio-carousel {
+        height: 300px;
+    }
+    
+    .carousel-slide {
+        flex: 0 0 100%;
+        min-width: 100%;
+    }
+    
+    .contact-button {
+        bottom: 15px;
+        right: 15px;
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Extra small - CONSOLIDATO */
+@media (max-width: 430px) {
+    body {
+        font-size: 0.85rem;
+        line-height: 1.4;
+    }
+    
+    .section h2 {
+        font-size: 1.2rem;
+    }
+    
+    .section h3 {
+        font-size: 1.1rem;
+    }
+    
+    .section p {
+        font-size: 0.85rem;
+    }
+    
+    .servizio-overlay h3 {
+        font-size: 1.1rem;
+    }
+    
+    .servizio-overlay p {
+        font-size: 0.8rem;
+    }
+    
+    .carousel-caption {
+        font-size: 0.75rem;
+        padding: 8px;
+    }
+    
+    .contact-button {
+        bottom: 10px;
+        right: 10px;
+        padding: 6px 8px;
+        font-size: 0.7rem;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 0.8rem;
+        padding: 0.5rem;
+    }
+    
+    .privacy-checkbox label {
+        font-size: 0.75rem;
+    }
+}
+
+/* ==========================================================================
+   OTTIMIZZAZIONI CRITICHE PER TTI
+   ========================================================================== */
+
+/* Preload hint per immagini critiche */
+.servizio-immagine img,
+.carousel-image,
+.profile-image {
+    /* TTI: Ottimizzazione loading delle immagini */
+    loading: lazy;
+}
+
+/* Contenimento layout per evitare reflow */
+.servizio-immagine,
+.portfolio-carousel,
+.profile-image {
+    contain: layout style paint;
+}
+
+/* Ottimizzazione animazioni */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }

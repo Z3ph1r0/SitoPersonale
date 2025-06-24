@@ -1,0 +1,64 @@
+# robots.txt per Federico Rozzoni Graphics Portfolio
+# https://federico-rozzoni-graphic.netlify.app/
+
+# Permetti l'accesso a tutti i contenuti pubblici
+User-agent: *
+Allow: /
+
+# Permetti l'accesso completo alle risorse necessarie per il sito
+Allow: /styles.css
+Allow: /script.js
+Allow: /favicon.ico
+Allow: /IMG/
+Allow: /Tarocchi/
+Allow: /servizi/
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.gif
+Allow: /*.svg
+Allow: /*.css
+Allow: /*.js
+
+# Permetti l'accesso al portfolio PDF (è nella sitemap)
+Allow: /Portfolio%20Rozzoni%20Federico.pdf
+Allow: /Portfolio*
+
+# Blocca eventuali file di configurazione sensibili (se presenti)
+Disallow: /.env
+Disallow: /.git/
+Disallow: /node_modules/
+Disallow: /.netlify/
+Disallow: /package.json
+Disallow: /package-lock.json
+
+# Blocca file temporanei o di backup
+Disallow: /*.tmp
+Disallow: /*.bak
+Disallow: /*~
+
+# Specifica la posizione della sitemap XML
+Sitemap: https://federico-rozzoni-graphic.netlify.app/sitemap.xml
+
+# Configurazioni specifiche per i principali motori di ricerca
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Blocca alcuni bot che potrebbero consumare risorse inutilmente
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /

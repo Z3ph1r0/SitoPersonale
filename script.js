@@ -1,21 +1,25 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Gestione navbar
+    // ==========================================================================
+    // GESTIONE NAVBAR
+    // ==========================================================================
     const navbar = document.getElementById('navbar');
     const navbarToggle = document.getElementById('navbarToggle');
     const navbarNav = document.getElementById('navbarNav');
     
     // Toggle menu su dispositivi mobili
-    navbarToggle.addEventListener('click', function() {
-        navbarNav.classList.toggle('show');
-    });
-    
-    // Chiudi menu quando si clicca su un link
-    const navLinks = document.querySelectorAll('.navbar-nav a');
-    navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            navbarNav.classList.remove('show');
+    if (navbarToggle && navbarNav) {
+        navbarToggle.addEventListener('click', function() {
+            navbarNav.classList.toggle('show');
         });
-    });
+        
+        // Chiudi menu quando si clicca su un link
+        const navLinks = document.querySelectorAll('.navbar-nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navbarNav.classList.remove('show');
+            });
+        });
+    }
     
     // Aggiorna classe active sul link corrente
     window.addEventListener('scroll', function() {
@@ -37,137 +41,183 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Funzionalità carosello orizzontale
+    // ==========================================================================
+    // CAROSELLO CON LOOP INFINITO E SWIPE
+    // ==========================================================================
     function initCarousel() {
         const track = document.getElementById('carouselTrack');
         const slides = document.querySelectorAll('.carousel-slide');
-        const indicators = document.querySelectorAll('.indicator');
         const prevBtn = document.getElementById('prevSlide');
         const nextBtn = document.getElementById('nextSlide');
         
         if (!track || slides.length === 0) return;
         
-        let currentPosition = 0;
-        const slideCount = slides.length;
-        const visibleSlides = window.innerWidth < 576 ? 1 : window.innerWidth < 992 ? 2 : 3;
-        const maxPosition = Math.ceil(slideCount / visibleSlides) - 1;
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+        const visibleSlides = getVisibleSlides();
+        let isTransitioning = false;
         
-        // Update indicators to match the number of pages
-        const indicatorContainer = document.querySelector('.carousel-indicators');
-        if (indicatorContainer) {
+        function getVisibleSlides() {
+            if (window.innerWidth < 576) return 1;
+            if (window.innerWidth < 992) return 2;
+            return 3;
+        }
+        
+        // Crea e aggiorna gli indicatori
+        function updateIndicators() {
+            const indicatorContainer = document.querySelector('.carousel-indicators');
+            if (!indicatorContainer) return;
+            
             indicatorContainer.innerHTML = '';
-            for (let i = 0; i <= maxPosition; i++) {
+            for (let i = 0; i < totalSlides; i++) {
                 const indicator = document.createElement('span');
                 indicator.classList.add('indicator');
-                if (i === 0) indicator.classList.add('active');
+                if (i === currentSlide) indicator.classList.add('active');
                 indicator.setAttribute('data-slide', i);
                 indicator.addEventListener('click', () => {
-                    goToPosition(i);
+                    if (!isTransitioning) {
+                        goToSlide(i);
+                    }
                 });
                 indicatorContainer.appendChild(indicator);
             }
         }
         
-        // Function to update carousel position
+        // Aggiorna la posizione del carosello
         function updateCarousel() {
+            if (isTransitioning) return;
+            
+            isTransitioning = true;
             const slideWidth = 100 / visibleSlides;
-            const offset = -currentPosition * visibleSlides * slideWidth;
+            const offset = -currentSlide * slideWidth;
+            
+            track.style.transition = 'transform 0.5s ease';
             track.style.transform = `translateX(${offset}%)`;
             
-            // Update indicators
+            // Aggiorna indicatori
             document.querySelectorAll('.indicator').forEach((ind, index) => {
-                ind.classList.toggle('active', index === currentPosition);
+                ind.classList.toggle('active', index === currentSlide);
             });
+            
+            setTimeout(() => {
+                isTransitioning = false;
+            }, 500);
         }
         
-        // Function to go to specific position
-        function goToPosition(position) {
-            currentPosition = Math.max(0, Math.min(position, maxPosition));
+        // Vai a una slide specifica
+        function goToSlide(slideIndex) {
+            currentSlide = slideIndex;
             updateCarousel();
         }
         
-        // Event listener for previous button
+        // Slide successiva con loop infinito
+        function nextSlide() {
+            if (isTransitioning) return;
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+        }
+        
+        // Slide precedente con loop infinito
+        function prevSlide() {
+            if (isTransitioning) return;
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+        }
+        
+        // Event listeners per i pulsanti
         if (prevBtn) {
-            prevBtn.addEventListener('click', function() {
-                currentPosition = Math.max(0, currentPosition - 1);
-                updateCarousel();
-            });
+            prevBtn.addEventListener('click', prevSlide);
         }
         
-        // Event listener for next button
         if (nextBtn) {
-            nextBtn.addEventListener('click', function() {
-                currentPosition = Math.min(maxPosition, currentPosition + 1);
-                updateCarousel();
-            });
+            nextBtn.addEventListener('click', nextSlide);
         }
         
-        // Set up automatic rotation
+        // ==========================================================================
+        // SUPPORTO TOUCH E SWIPE
+        // ==========================================================================
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let touchStartY = 0;
+        let touchEndY = 0;
+        
+        track.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+        
+        track.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
+            handleSwipe();
+        }, { passive: true });
+        
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const swipeDistanceX = Math.abs(touchEndX - touchStartX);
+            const swipeDistanceY = Math.abs(touchEndY - touchStartY);
+            
+            // Verifica che lo swipe sia più orizzontale che verticale
+            if (swipeDistanceX > swipeThreshold && swipeDistanceX > swipeDistanceY) {
+                if (touchEndX < touchStartX) {
+                    // Swipe left - vai avanti
+                    nextSlide();
+                } else {
+                    // Swipe right - vai indietro
+                    prevSlide();
+                }
+            }
+        }
+        
+        // ==========================================================================
+        // AUTOPLAY
+        // ==========================================================================
         let autoplayInterval;
         
         function startAutoplay() {
-            autoplayInterval = setInterval(function() {
-                currentPosition = (currentPosition + 1) % (maxPosition + 1);
-                updateCarousel();
-            }, 5000);
+            autoplayInterval = setInterval(nextSlide, 4000);
         }
         
         function stopAutoplay() {
             clearInterval(autoplayInterval);
         }
         
-        // Start autoplay
-        startAutoplay();
-        
-        // Pause autoplay when hovering over carousel
-        track.addEventListener('mouseenter', stopAutoplay);
-        track.addEventListener('mouseleave', startAutoplay);
-        
-        // Initialize carousel
-        updateCarousel();
-        
-        // Add touch support for mobile
-        let touchStartX = 0;
-        let touchEndX = 0;
-        
-        track.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        });
-        
-        track.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        });
-        
-        function handleSwipe() {
-            const swipeThreshold = 50;
-            if (touchEndX < touchStartX - swipeThreshold) {
-                // Swipe left
-                currentPosition = Math.min(maxPosition, currentPosition + 1);
-                updateCarousel();
-            } else if (touchEndX > touchStartX + swipeThreshold) {
-                // Swipe right
-                currentPosition = Math.max(0, currentPosition - 1);
-                updateCarousel();
-            }
+        // Pausa autoplay su hover
+        const carouselContainer = document.querySelector('.portfolio-carousel');
+        if (carouselContainer) {
+            carouselContainer.addEventListener('mouseenter', stopAutoplay);
+            carouselContainer.addEventListener('mouseleave', startAutoplay);
         }
         
-        // Aggiorna il carosello quando la finestra viene ridimensionata
+        // Pausa autoplay durante il touch
+        track.addEventListener('touchstart', stopAutoplay);
+        track.addEventListener('touchend', () => {
+            setTimeout(startAutoplay, 2000); // Riprendi dopo 2 secondi
+        });
+        
+        // Inizializza tutto
+        updateIndicators();
+        updateCarousel();
+        startAutoplay();
+        
+        // Gestione resize
         window.addEventListener('resize', function() {
-            const newVisibleSlides = window.innerWidth < 576 ? 1 : window.innerWidth < 992 ? 2 : 3;
+            const newVisibleSlides = getVisibleSlides();
             if (newVisibleSlides !== visibleSlides) {
-                location.reload(); // Ricaricare la pagina è più semplice che ricalcolare tutto
+                // Ricalcola la posizione corrente
+                if (currentSlide >= totalSlides) {
+                    currentSlide = 0;
+                }
+                updateCarousel();
             }
         });
     }
     
-    // Chiama la funzione per inizializzare il carosello
-    initCarousel();
-    
-    // Crea il modal per le immagini
+    // ==========================================================================
+    // MODAL PER IMMAGINI
+    // ==========================================================================
     let imageModal = document.getElementById('imageModal');
     if (!imageModal) {
-        // Crea il modal e lo aggiunge al body
         imageModal = document.createElement('div');
         imageModal.id = 'imageModal';
         imageModal.className = 'modal';
@@ -181,56 +231,73 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.appendChild(imageModal);
     }
     
-    // Riferimenti agli elementi del modal
     const modalImg = document.getElementById('modalImage');
     const modalCaption = document.getElementById('modalCaption');
     const closeModalBtn = document.querySelector('.close-modal');
     
-    // Funzione per chiudere il modal
-    function closeImageModal() {
+    function openModal(imgSrc, title = '', description = '') {
+        modalImg.src = imgSrc;
+        modalCaption.innerHTML = '';
+        
+        if (title) {
+            modalCaption.innerHTML += `<h3>${title}</h3>`;
+        }
+        if (description) {
+            modalCaption.innerHTML += `<p>${description}</p>`;
+        }
+        
+        imageModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        
+        setTimeout(() => {
+            imageModal.classList.add('show');
+        }, 10);
+    }
+    
+    function closeModal() {
         imageModal.classList.remove('show');
+        document.body.style.overflow = '';
+        
         setTimeout(() => {
             imageModal.style.display = 'none';
         }, 300);
-        
-        // Ripristina lo scroll della pagina
-        document.body.style.overflow = '';
     }
     
-    // Chiudi il modal quando si fa clic sulla X
+    // Event listeners per chiudere il modal
     if (closeModalBtn) {
-        closeModalBtn.addEventListener('click', closeImageModal);
+        closeModalBtn.addEventListener('click', closeModal);
     }
     
-    // Chiudi il modal quando si fa clic al di fuori dell'immagine
     imageModal.addEventListener('click', function(event) {
         if (event.target === imageModal) {
-            closeImageModal();
+            closeModal();
         }
     });
     
-    // Chiudi il modal con il tasto ESC
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape' && imageModal.classList.contains('show')) {
-            closeImageModal();
+            closeModal();
         }
     });
     
-    // Gestisci i click sulle immagini nella sezione servizi
+    // ==========================================================================
+    // CLICK SULLE IMMAGINI DEI SERVIZI
+    // ==========================================================================
     const servizioImmagini = document.querySelectorAll('.servizio-immagine');
     servizioImmagini.forEach(function(servizioItem) {
-        // Aggiungi il cursore pointer per indicare che è cliccabile
         servizioItem.style.cursor = 'pointer';
         
-        // Aggiungi l'evento click
         servizioItem.addEventListener('click', function() {
-            // Ottieni l'URL dell'immagine dalla sorgente dell'immagine o dall'attributo data-img
-            const imgSrc = this.getAttribute('data-img') || this.querySelector('img').src;
-            
-            // Ottieni il titolo e la descrizione dall'overlay
+            const img = this.querySelector('img');
             const overlay = this.querySelector('.servizio-overlay');
+            
+            let imgSrc = '';
             let title = '';
             let desc = '';
+            
+            if (img) {
+                imgSrc = img.src;
+            }
             
             if (overlay) {
                 const titleElement = overlay.querySelector('h3');
@@ -240,94 +307,82 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (descElement) desc = descElement.textContent;
             }
             
-            // Imposta i valori nel modal
-            modalImg.src = imgSrc;
-            modalCaption.innerHTML = title ? `<h3>${title}</h3>` : '';
-            if (desc) {
-                modalCaption.innerHTML += `<p>${desc}</p>`;
+            if (imgSrc) {
+                openModal(imgSrc, title, desc);
             }
-            
-            // Mostra il modal con animazione
-            imageModal.style.display = 'flex';
-            setTimeout(() => {
-                imageModal.classList.add('show');
-            }, 10);
-            
-            // Blocca lo scroll della pagina
-            document.body.style.overflow = 'hidden';
         });
     });
     
-    // Gestisci anche i click sulle immagini nel carosello portfolio
-    const portfolioImmagini = document.querySelectorAll('.carousel-slide');
-    portfolioImmagini.forEach(function(slide) {
-        const img = slide.querySelector('img');
-        const caption = slide.querySelector('.carousel-caption');
+    // ==========================================================================
+    // CLICK SULLE IMMAGINI DEL CAROSELLO
+    // ==========================================================================
+    const portfolioImmagini = document.querySelectorAll('.carousel-slide img');
+    portfolioImmagini.forEach(function(img) {
+        img.style.cursor = 'pointer';
         
-        if (img) {
-            // Aggiungi il cursore pointer
-            img.style.cursor = 'pointer';
+        img.addEventListener('click', function(e) {
+            e.stopPropagation();
             
-            img.addEventListener('click', function(e) {
-                e.stopPropagation(); // Impedisce che l'evento si propaghi al carosello
+            const slide = this.closest('.carousel-slide');
+            const caption = slide ? slide.querySelector('.carousel-caption') : null;
+            
+            let title = '';
+            let desc = '';
+            
+            if (caption) {
+                const titleElement = caption.querySelector('h3');
+                const descElement = caption.querySelector('p');
                 
-                // Ottieni l'URL dell'immagine
-                const imgSrc = this.src;
-                
-                // Prepara il contenuto del caption
-                let captionHTML = '';
-                if (caption) {
-                    const titleElement = caption.querySelector('h3');
-                    const descElement = caption.querySelector('p');
-                    
-                    if (titleElement) captionHTML += `<h3>${titleElement.textContent}</h3>`;
-                    if (descElement) captionHTML += `<p>${descElement.textContent}</p>`;
-                }
-                
-                // Imposta i valori nel modal
-                modalImg.src = imgSrc;
-                modalCaption.innerHTML = captionHTML;
-                
-                // Mostra il modal con animazione
-                imageModal.style.display = 'flex';
-                setTimeout(() => {
-                    imageModal.classList.add('show');
-                }, 10);
-                
-                // Blocca lo scroll della pagina
-                document.body.style.overflow = 'hidden';
-            });
-        }
+                if (titleElement) title = titleElement.textContent;
+                if (descElement) desc = descElement.textContent;
+            }
+            
+            openModal(this.src, title, desc);
+        });
     });
     
-    // Gestione del form di contatto
+    // ==========================================================================
+    // GESTIONE FORM DI CONTATTO
+    // ==========================================================================
     const callForm = document.getElementById('callForm');
     if (callForm) {
         callForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Qui puoi aggiungere la logica per inviare i dati del form
-            // Ad esempio, usando fetch per inviare i dati a un server
+            // Validazione base
+            const requiredFields = this.querySelectorAll('[required]');
+            let isValid = true;
             
-            // Per ora mostreremo solo un alert di conferma
-            alert('Grazie per aver inviato la richiesta! Ti contatteremo presto.');
-            this.reset();
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = '#ff0000';
+                } else {
+                    field.style.borderColor = '#ddd';
+                }
+            });
+            
+            if (isValid) {
+                alert('Grazie per aver inviato la richiesta! Ti contatteremo presto.');
+                this.reset();
+            } else {
+                alert('Per favore, compila tutti i campi obbligatori.');
+            }
         });
     }
-// Gestione del pulsante contatti fisso
-document.addEventListener('DOMContentLoaded', function() {
-    const contactButton = document.getElementById('contactButton');
     
+    // ==========================================================================
+    // PULSANTE CONTATTI FISSO
+    // ==========================================================================
+    const contactButton = document.getElementById('contactButton');
     if (contactButton) {
         contactButton.addEventListener('click', function(e) {
             e.preventDefault();
             
             const targetSection = document.getElementById('section5');
             if (targetSection) {
-                // Scroll fluido alla sezione contatti
                 targetSection.scrollIntoView({ behavior: 'smooth' });
                 
-                // Focus sul primo campo del form dopo lo scroll
                 setTimeout(function() {
                     const nameInput = document.getElementById('name');
                     if (nameInput) nameInput.focus();
@@ -335,5 +390,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-});
+    
+    // Inizializza il carosello
+    initCarousel();
 });
