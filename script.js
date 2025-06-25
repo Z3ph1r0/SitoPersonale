@@ -42,177 +42,452 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // ==========================================================================
-    // CAROSELLO CON LOOP INFINITO E SWIPE
+    // CAROSELLO PORTFOLIO CON LOOP INFINITO
     // ==========================================================================
-    function initCarousel() {
-        const track = document.getElementById('carouselTrack');
-        const slides = document.querySelectorAll('.carousel-slide');
-        const prevBtn = document.getElementById('prevSlide');
-        const nextBtn = document.getElementById('nextSlide');
-        
-        if (!track || slides.length === 0) return;
-        
-        let currentSlide = 0;
-        const totalSlides = slides.length;
-        const visibleSlides = getVisibleSlides();
-        let isTransitioning = false;
-        
-        function getVisibleSlides() {
-            if (window.innerWidth < 576) return 1;
-            if (window.innerWidth < 992) return 2;
+
+    class PortfolioCarousel {
+        constructor(containerId, images) {
+            // Elementi DOM
+            this.container = document.getElementById(containerId);
+            if (!this.container) {
+                console.error('Container del carosello non trovato:', containerId);
+                return;
+            }
+            
+            this.track = this.container.querySelector('.carousel-track');
+            this.indicators = this.container.querySelector('.carousel-indicators');
+            this.prevBtn = this.container.querySelector('#prev-btn') || this.container.querySelector('.carousel-control[data-direction="prev"]');
+            this.nextBtn = this.container.querySelector('#next-btn') || this.container.querySelector('.carousel-control[data-direction="next"]');
+            this.autoplayToggle = document.getElementById('autoplay-toggle');
+            this.autoplayStatus = document.querySelector('.autoplay-status');
+            
+            // Configurazione
+            this.images = images;
+            this.currentIndex = 0;
+            this.slidesPerView = this.getSlidesPerView();
+            this.totalSlides = this.images.length;
+            this.autoplayInterval = null;
+            this.isAutoplay = true;
+            this.transitionDuration = 400;
+            this.autoplayDelay = 4000;
+            
+            // Inizializzazione
+            this.init();
+        }
+
+        // Calcola quante slide mostrare in base alla larghezza schermo
+        getSlidesPerView() {
+            if (window.innerWidth <= 576) return 1;
+            if (window.innerWidth <= 992) return 2;
             return 3;
         }
-        
-        // Crea e aggiorna gli indicatori
-        function updateIndicators() {
-            const indicatorContainer = document.querySelector('.carousel-indicators');
-            if (!indicatorContainer) return;
-            
-            indicatorContainer.innerHTML = '';
-            for (let i = 0; i < totalSlides; i++) {
-                const indicator = document.createElement('span');
-                indicator.classList.add('indicator');
-                if (i === currentSlide) indicator.classList.add('active');
-                indicator.setAttribute('data-slide', i);
-                indicator.addEventListener('click', () => {
-                    if (!isTransitioning) {
-                        goToSlide(i);
-                    }
-                });
-                indicatorContainer.appendChild(indicator);
+
+        // Inizializza il carosello
+        init() {
+            if (!this.track || this.images.length === 0) {
+                console.error('Carosello: elementi DOM o immagini mancanti');
+                return;
             }
+
+            this.createSlides();
+            this.createIndicators();
+            this.attachEventListeners();
+            this.updateCarousel();
+            this.startAutoplay();
         }
-        
-        // Aggiorna la posizione del carosello
-        function updateCarousel() {
-            if (isTransitioning) return;
+
+        // Crea le slide (originali + cloni per loop infinito)
+        createSlides() {
+            this.track.innerHTML = '';
             
-            isTransitioning = true;
-            const slideWidth = 100 / visibleSlides;
-            const offset = -currentSlide * slideWidth;
+            const slidesToPrepend = this.slidesPerView;
+            const slidesToAppend = this.slidesPerView;
             
-            track.style.transition = 'transform 0.5s ease';
-            track.style.transform = `translateX(${offset}%)`;
+            // Cloni iniziali (ultime immagini)
+            for (let i = this.totalSlides - slidesToPrepend; i < this.totalSlides; i++) {
+                this.createSlide(this.images[i], true);
+            }
             
-            // Aggiorna indicatori
-            document.querySelectorAll('.indicator').forEach((ind, index) => {
-                ind.classList.toggle('active', index === currentSlide);
+            // Slide originali
+            this.images.forEach((image, index) => {
+                this.createSlide(image, false, index);
             });
             
-            setTimeout(() => {
-                isTransitioning = false;
-            }, 500);
+            // Cloni finali (prime immagini)
+            for (let i = 0; i < slidesToAppend; i++) {
+                this.createSlide(this.images[i], true);
+            }
+
+            // Posizione iniziale (dopo i cloni iniziali)
+            this.currentIndex = slidesToPrepend;
+            this.updateTrackPosition(false);
         }
-        
-        // Vai a una slide specifica
-        function goToSlide(slideIndex) {
-            currentSlide = slideIndex;
-            updateCarousel();
-        }
-        
-        // Slide successiva con loop infinito
-        function nextSlide() {
-            if (isTransitioning) return;
-            currentSlide = (currentSlide + 1) % totalSlides;
-            updateCarousel();
-        }
-        
-        // Slide precedente con loop infinito
-        function prevSlide() {
-            if (isTransitioning) return;
-            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-            updateCarousel();
-        }
-        
-        // Event listeners per i pulsanti
-        if (prevBtn) {
-            prevBtn.addEventListener('click', prevSlide);
-        }
-        
-        if (nextBtn) {
-            nextBtn.addEventListener('click', nextSlide);
-        }
-        
-        // ==========================================================================
-        // SUPPORTO TOUCH E SWIPE
-        // ==========================================================================
-        let touchStartX = 0;
-        let touchEndX = 0;
-        let touchStartY = 0;
-        let touchEndY = 0;
-        
-        track.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-            touchStartY = e.changedTouches[0].screenY;
-        }, { passive: true });
-        
-        track.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            touchEndY = e.changedTouches[0].screenY;
-            handleSwipe();
-        }, { passive: true });
-        
-        function handleSwipe() {
-            const swipeThreshold = 50;
-            const swipeDistanceX = Math.abs(touchEndX - touchStartX);
-            const swipeDistanceY = Math.abs(touchEndY - touchStartY);
+
+        // Crea una singola slide
+        createSlide(imageData, isClone = false, originalIndex = null) {
+            const slide = document.createElement('div');
+            slide.className = `carousel-slide${isClone ? ' clone' : ''}`;
             
-            // Verifica che lo swipe sia più orizzontale che verticale
-            if (swipeDistanceX > swipeThreshold && swipeDistanceX > swipeDistanceY) {
-                if (touchEndX < touchStartX) {
-                    // Swipe left - vai avanti
-                    nextSlide();
-                } else {
-                    // Swipe right - vai indietro
-                    prevSlide();
-                }
+            if (originalIndex !== null) {
+                slide.dataset.originalIndex = originalIndex;
+            }
+            
+            slide.innerHTML = `
+                <img src="${imageData.src}" alt="${imageData.title}" class="carousel-image" loading="lazy">
+                <div class="carousel-caption">
+                    <h4>${imageData.title}</h4>
+                    <p>${imageData.description}</p>
+                </div>
+            `;
+            
+            this.track.appendChild(slide);
+        }
+
+        // Crea gli indicatori
+        createIndicators() {
+            if (!this.indicators) return;
+            
+            this.indicators.innerHTML = '';
+            
+            for (let i = 0; i < this.totalSlides; i++) {
+                const indicator = document.createElement('div');
+                indicator.className = 'indicator';
+                indicator.dataset.index = i;
+                indicator.addEventListener('click', () => this.goToSlide(i));
+                this.indicators.appendChild(indicator);
             }
         }
-        
-        // ==========================================================================
-        // AUTOPLAY
-        // ==========================================================================
-        let autoplayInterval;
-        
-        function startAutoplay() {
-            autoplayInterval = setInterval(nextSlide, 4000);
-        }
-        
-        function stopAutoplay() {
-            clearInterval(autoplayInterval);
-        }
-        
-        // Pausa autoplay su hover
-        const carouselContainer = document.querySelector('.portfolio-carousel');
-        if (carouselContainer) {
-            carouselContainer.addEventListener('mouseenter', stopAutoplay);
-            carouselContainer.addEventListener('mouseleave', startAutoplay);
-        }
-        
-        // Pausa autoplay durante il touch
-        track.addEventListener('touchstart', stopAutoplay);
-        track.addEventListener('touchend', () => {
-            setTimeout(startAutoplay, 2000); // Riprendi dopo 2 secondi
-        });
-        
-        // Inizializza tutto
-        updateIndicators();
-        updateCarousel();
-        startAutoplay();
-        
-        // Gestione resize
-        window.addEventListener('resize', function() {
-            const newVisibleSlides = getVisibleSlides();
-            if (newVisibleSlides !== visibleSlides) {
-                // Ricalcola la posizione corrente
-                if (currentSlide >= totalSlides) {
-                    currentSlide = 0;
-                }
-                updateCarousel();
+
+        // Aggiorna la posizione del track
+        updateTrackPosition(animate = true) {
+            const translateX = -(this.currentIndex * (100 / this.slidesPerView));
+            
+            if (animate) {
+                this.track.classList.remove('no-transition');
+            } else {
+                this.track.classList.add('no-transition');
             }
-        });
+            
+            this.track.style.transform = `translateX(${translateX}%)`;
+            
+            // Rimuovi la classe no-transition dopo un frame
+            if (!animate) {
+                requestAnimationFrame(() => {
+                    this.track.classList.remove('no-transition');
+                });
+            }
+        }
+
+        // Aggiorna gli indicatori
+        updateIndicators() {
+            if (!this.indicators) return;
+            
+            const indicators = this.indicators.querySelectorAll('.indicator');
+            const realIndex = this.getRealIndex();
+            
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === realIndex);
+            });
+        }
+
+        // Ottieni l'indice reale (senza contare i cloni)
+        getRealIndex() {
+            const slidesToPrepend = this.slidesPerView;
+            return (this.currentIndex - slidesToPrepend + this.totalSlides) % this.totalSlides;
+        }
+
+        // Aggiorna tutto il carosello
+        updateCarousel() {
+            this.updateTrackPosition();
+            this.updateIndicators();
+        }
+
+        // Vai alla slide successiva
+        next() {
+            this.currentIndex++;
+            this.updateCarousel();
+            
+            // Controlla se dobbiamo fare il reset per il loop infinito
+            setTimeout(() => {
+                const maxIndex = this.totalSlides + this.slidesPerView;
+                if (this.currentIndex >= maxIndex) {
+                    this.currentIndex = this.slidesPerView;
+                    this.updateTrackPosition(false);
+                }
+            }, this.transitionDuration);
+        }
+
+        // Vai alla slide precedente
+        prev() {
+            this.currentIndex--;
+            this.updateCarousel();
+            
+            // Controlla se dobbiamo fare il reset per il loop infinito
+            setTimeout(() => {
+                if (this.currentIndex < this.slidesPerView) {
+                    this.currentIndex = this.totalSlides + this.slidesPerView - 1;
+                    this.updateTrackPosition(false);
+                }
+            }, this.transitionDuration);
+        }
+
+        // Vai a una slide specifica
+        goToSlide(index) {
+            const slidesToPrepend = this.slidesPerView;
+            this.currentIndex = index + slidesToPrepend;
+            this.updateCarousel();
+        }
+
+        // Avvia autoplay
+        startAutoplay() {
+            if (this.isAutoplay && !this.autoplayInterval) {
+                this.autoplayInterval = setInterval(() => {
+                    this.next();
+                }, this.autoplayDelay);
+                this.updateAutoplayUI();
+            }
+        }
+
+        // Ferma autoplay
+        stopAutoplay() {
+            if (this.autoplayInterval) {
+                clearInterval(this.autoplayInterval);
+                this.autoplayInterval = null;
+            }
+        }
+
+        // Toggle autoplay
+        toggleAutoplay() {
+            this.isAutoplay = !this.isAutoplay;
+            
+            if (this.isAutoplay) {
+                this.startAutoplay();
+            } else {
+                this.stopAutoplay();
+            }
+            
+            this.updateAutoplayUI();
+        }
+
+        // Aggiorna UI autoplay
+        updateAutoplayUI() {
+            if (this.autoplayToggle) {
+                this.autoplayToggle.innerHTML = this.isAutoplay ? '⏸️ Pausa' : '▶️ Play';
+            }
+            
+            if (this.autoplayStatus) {
+                this.autoplayStatus.textContent = this.isAutoplay ? 
+                    `Autoplay attivo - Cambia ogni ${this.autoplayDelay/1000}s` : 
+                    'Autoplay disattivato';
+            }
+        }
+
+        // Gestisci resize
+        handleResize() {
+            const newSlidesPerView = this.getSlidesPerView();
+            
+            if (newSlidesPerView !== this.slidesPerView) {
+                this.slidesPerView = newSlidesPerView;
+                const realIndex = this.getRealIndex();
+                this.createSlides();
+                this.goToSlide(realIndex);
+            }
+        }
+
+        // Aggiungi event listeners
+        attachEventListeners() {
+            // Controlli navigazione
+            if (this.nextBtn) {
+                this.nextBtn.addEventListener('click', () => {
+                    this.handleUserInteraction(() => this.next());
+                });
+            }
+
+            if (this.prevBtn) {
+                this.prevBtn.addEventListener('click', () => {
+                    this.handleUserInteraction(() => this.prev());
+                });
+            }
+
+            // Toggle autoplay
+            if (this.autoplayToggle) {
+                this.autoplayToggle.addEventListener('click', () => {
+                    this.toggleAutoplay();
+                });
+            }
+
+            // Pausa su hover
+            this.container.addEventListener('mouseenter', () => {
+                if (this.isAutoplay) this.stopAutoplay();
+            });
+
+            this.container.addEventListener('mouseleave', () => {
+                if (this.isAutoplay) this.startAutoplay();
+            });
+
+            // Resize
+            window.addEventListener('resize', () => {
+                clearTimeout(this.resizeTimeout);
+                this.resizeTimeout = setTimeout(() => {
+                    this.handleResize();
+                }, 250);
+            });
+
+            // Touch/swipe support
+            this.addTouchSupport();
+
+            // Keyboard support
+            this.addKeyboardSupport();
+        }
+
+        // Gestisci interazione utente (pausa temporanea autoplay)
+        handleUserInteraction(callback) {
+            const wasAutoplay = this.isAutoplay;
+            this.stopAutoplay();
+            callback();
+            
+            if (wasAutoplay) {
+                setTimeout(() => {
+                    if (this.isAutoplay) this.startAutoplay();
+                }, 3000); // Riprende dopo 3 secondi
+            }
+        }
+
+        // Aggiungi supporto touch/swipe
+        addTouchSupport() {
+            let startX = 0;
+            let isDragging = false;
+            let startTime = 0;
+
+            this.track.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+                startTime = Date.now();
+                isDragging = true;
+                this.stopAutoplay();
+            }, { passive: true });
+
+            this.track.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                // Previeni scroll verticale solo se swipe orizzontale
+                const currentX = e.touches[0].clientX;
+                const diffX = Math.abs(startX - currentX);
+                if (diffX > 10) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+
+            this.track.addEventListener('touchend', (e) => {
+                if (!isDragging) return;
+                
+                const endX = e.changedTouches[0].clientX;
+                const diffX = startX - endX;
+                const diffTime = Date.now() - startTime;
+                
+                // Swipe deve essere abbastanza veloce e lungo
+                if (Math.abs(diffX) > 50 && diffTime < 300) {
+                    if (diffX > 0) {
+                        this.next();
+                    } else {
+                        this.prev();
+                    }
+                }
+                
+                isDragging = false;
+                
+                // Riprende autoplay dopo interazione
+                if (this.isAutoplay) {
+                    setTimeout(() => this.startAutoplay(), 2000);
+                }
+            }, { passive: true });
+        }
+
+        // Aggiungi supporto keyboard
+        addKeyboardSupport() {
+            document.addEventListener('keydown', (e) => {
+                // Solo se il carosello è visibile
+                if (!this.container.offsetParent) return;
+                
+                switch(e.key) {
+                    case 'ArrowLeft':
+                        e.preventDefault();
+                        this.handleUserInteraction(() => this.prev());
+                        break;
+                    case 'ArrowRight':
+                        e.preventDefault();
+                        this.handleUserInteraction(() => this.next());
+                        break;
+                    case ' ': // Spacebar
+                        e.preventDefault();
+                        this.toggleAutoplay();
+                        break;
+                }
+            });
+        }
+
+        // Distruggi il carosello (cleanup)
+        destroy() {
+            this.stopAutoplay();
+            if (this.resizeTimeout) clearTimeout(this.resizeTimeout);
+            // Rimuovi event listeners se necessario
+        }
     }
+
+    // ==========================================================================
+    // INIZIALIZZAZIONE CAROSELLO
+    // ==========================================================================
+
+    // Dati delle immagini del portfolio (MODIFICA QUESTI DATI CON I TUOI)
+    const portfolioImages = [
+        { 
+            src: 'Tarocchi/1.png', 
+            title: 'Tarocco del Matto', 
+            description: 'Carta ispirata al videogioco Dark Souls 1' 
+        },
+        { 
+            src: 'Tarocchi/2.png', 
+            title: 'Tarocco della Papessa', 
+            description: 'Carta ispirata al videogioco Dark Souls 3' 
+        },
+        { 
+            src: 'Tarocchi/3.png', 
+            title: 'Tarocco dell\' Imperatore', 
+            description: 'Carta ispirata al videogioco Dark Souls 1' 
+        },
+        { 
+            src: 'Tarocchi/4.png', 
+            title: 'Tarocco degli Amanti', 
+            description: 'Carta ispirata al videogioco Dark Souls 3' 
+        },
+        { 
+            src: 'Tarocchi/5.png', 
+            title: 'Tarocco del Carro', 
+            description: 'Carta ispirata al videogioco Dark Souls 3' 
+        },
+        { 
+            src: 'Tarocchi/6.png', 
+            title: 'Tarocco del Sole', 
+            description: 'Carta ispirata al videogioco Dark Souls 1' 
+        }
+    ];
+
+    // Inizializza il carosello quando il DOM è pronto
+    // Trova il container del carosello
+    const carouselContainer = document.querySelector('.portfolio-carousel-container');
     
+    if (carouselContainer && portfolioImages.length > 0) {
+        // Assegna un ID se non ce l'ha
+        if (!carouselContainer.id) {
+            carouselContainer.id = 'portfolio-carousel-container';
+        }
+        
+        // Crea il carosello
+        window.portfolioCarousel = new PortfolioCarousel(carouselContainer.id, portfolioImages);
+        
+        console.log('Carosello portfolio inizializzato con', portfolioImages.length, 'immagini');
+    } else {
+        console.warn('Carosello: container non trovato o nessuna immagine disponibile');
+    }
+        
     // ==========================================================================
     // MODAL PER IMMAGINI
     // ==========================================================================
@@ -316,29 +591,28 @@ document.addEventListener('DOMContentLoaded', function() {
     // ==========================================================================
     // CLICK SULLE IMMAGINI DEL CAROSELLO
     // ==========================================================================
-    const portfolioImmagini = document.querySelectorAll('.carousel-slide img');
-    portfolioImmagini.forEach(function(img) {
-        img.style.cursor = 'pointer';
-        
-        img.addEventListener('click', function(e) {
+    // Usa delegazione eventi per gestire anche le slide create dinamicamente
+    document.addEventListener('click', function(e) {
+        if (e.target.matches('.carousel-slide img')) {
             e.stopPropagation();
             
-            const slide = this.closest('.carousel-slide');
+            const img = e.target;
+            const slide = img.closest('.carousel-slide');
             const caption = slide ? slide.querySelector('.carousel-caption') : null;
             
             let title = '';
             let desc = '';
             
             if (caption) {
-                const titleElement = caption.querySelector('h3');
+                const titleElement = caption.querySelector('h4');
                 const descElement = caption.querySelector('p');
                 
                 if (titleElement) title = titleElement.textContent;
                 if (descElement) desc = descElement.textContent;
             }
             
-            openModal(this.src, title, desc);
-        });
+            openModal(img.src, title, desc);
+        }
     });
     
     // ==========================================================================
@@ -390,7 +664,4 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
-    // Inizializza il carosello
-    initCarousel();
 });
