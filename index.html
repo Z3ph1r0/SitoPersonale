@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Federico Rozzoni Graphics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Federico Graphic Designer</title>
     <meta name="description" content="Scopri il portfolio di Federico Rozzoni: graphic designer creativo a Oleggio. Progetti grafici, branding e illustrazione, prova il tuo prossimo stile!">
     
     <!-- CRITICAL: Preconnect per risorse esterne -->
@@ -35,13 +35,13 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 
-<body>
+<body itemscope itemtype="http://schema.org/Person">
     <!-- Navbar principale -->
     <nav class="navbar" id="navbar">
         <div class="navbar-inner">
             <div class="navbar-brand">
-                <img src="IMG/Logo Sito 2.png" alt="Logo Federico Rozzoni Graphics" class="logo-navbar">
-                <h2>Federico Rozzoni Graphics</h2>
+                <img src="IMG/Logo Sito 2.png" alt="Logo Federico Rozzoni Graphics" class="logo-navbar" itemprop="logo">
+                <h2 itemprop="brand">Federico Rozzoni Graphics</h2>
             </div>
             <ul class="navbar-nav" id="navbarNav">
                 <li>
@@ -83,15 +83,19 @@
             <div id="section1" class="section">
                 <div class="two-column-layout">
                     <div class="image-column">
-                        <img src="IMG/Foto profilo.png" alt="La mia foto profilo, alle spalle ho dei cigliegi in fiore" class="profile-image">
+                        <img src="IMG/Foto profilo.png" alt="La mia foto profilo, alle spalle ho dei cigliegi in fiore" class="profile-image" itemprop="image">
                     </div>
                     <div class="text-column">
-                        <h1>Federico Graphic Designer</h1>
-                        <h2>Creatività + logica</h3>
-                        <p>Sono un Graphic Designer con un mix di testa scientifica e cuore creativo. Precisione e originalità sono il mio pane quotidiano.</p>
-                        <h2>Organizzato e flessibile</h3>
+                        <h1 itemprop="name">Federico Graphic Designer</h1>
+                        <div itemprop="jobTitle" style="display: none;">Graphic Designer</div>
+                        <div itemprop="worksFor" itemscope itemtype="http://schema.org/Organization" style="display: none;">
+                            <span itemprop="name">Federico Rozzoni Graphics</span>
+                        </div>
+                        <h2>Creatività + logica</h2>
+                        <p itemprop="description">Sono un Graphic Designer con un mix di testa scientifica e cuore creativo. Precisione e originalità sono il mio pane quotidiano.</p>
+                        <h2>Organizzato e flessibile</h2>
                         <p>Gestisco bene tempi e progetti. L'esperienza nella ristorazione mi ha insegnato a essere rapido, adattabile e a lavorare sotto pressione.</p>
-                        <h2>Serio, ma alla mano</h3>
+                        <h2>Serio, ma alla mano</h2>
                         <p>Offro un servizio curato e su misura, ascolto con attenzione e trasformo le idee in design che funzionano davvero.</p>
                     </div>
                 </div>
@@ -101,43 +105,43 @@
                 <h2>Cosa posso offrire</h2>
                 <p>Servizi di graphic design professionali, tra cui:</p>
                 
-                <div class="servizi-container">
-                    <div class="servizio-item">
+                <div class="servizi-container" itemprop="makesOffer" itemscope itemtype="http://schema.org/Offer">
+                    <div class="servizio-item" itemprop="itemOffered" itemscope itemtype="http://schema.org/Service">
                         <div class="servizio-immagine" data-img="servizi/Brand identity.png">
-                            <img src="servizi/Brand identity.png" alt="Brand identity e logo design">
+                            <img src="servizi/Brand identity.png" alt="Brand identity e logo design" itemprop="image">
                             <div class="servizio-overlay">
-                                <h3>Brand identity e logo design</h3>
-                                <p>Creo identità visive uniche e riconoscibili che comunicano i valori del tuo brand.</p>
+                                <h3 itemprop="name">Brand identity e logo design</h3>
+                                <p itemprop="description">Creo identità visive uniche e riconoscibili che comunicano i valori del tuo brand.</p>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="servizio-item">
+                    <div class="servizio-item" itemprop="itemOffered" itemscope itemtype="http://schema.org/Service">
                         <div class="servizio-immagine" data-img="servizi/copywriting.png">
-                            <img src="servizi/copywriting.png" alt="MockUp Social Post">
+                            <img src="servizi/copywriting.png" alt="MockUp Social Post" itemprop="image">
                             <div class="servizio-overlay">
-                                <h3>SEO & Social copywriting</h3>
-                                <p>Scrivo e sviluppo contenuti ottimizzati per migliorare l'esperienza dei tuoi utenti.</p>
+                                <h3 itemprop="name">SEO & Social copywriting</h3>
+                                <p itemprop="description">Scrivo e sviluppo contenuti ottimizzati per migliorare l'esperienza dei tuoi utenti.</p>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="servizio-item">
+                    <div class="servizio-item" itemprop="itemOffered" itemscope itemtype="http://schema.org/Service">
                         <div class="servizio-immagine" data-img="servizi/Fronte Mock Up.jpg">
-                            <img src="servizi/Fronte Mock Up.jpg" alt="Materiale stampato">
+                            <img src="servizi/Fronte Mock Up.jpg" alt="Materiale stampato" itemprop="image">
                             <div class="servizio-overlay">
-                                <h3>Materiale stampato</h3>
-                                <p>Progetto brochure, biglietti da visita e flyer che lasciano un'impressione duratura.</p>
+                                <h3 itemprop="name">Materiale stampato</h3>
+                                <p itemprop="description">Progetto brochure, biglietti da visita e flyer che lasciano un'impressione duratura.</p>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="servizio-item">
+                    <div class="servizio-item" itemprop="itemOffered" itemscope itemtype="http://schema.org/Service">
                         <div class="servizio-immagine" data-img="servizi/Rozzoni_Federico_ADVaccademia.jpg">
-                            <img src="servizi/Rozzoni_Federico_ADVaccademia.jpg" alt="Illustrazioni digitali">
+                            <img src="servizi/Rozzoni_Federico_ADVaccademia.jpg" alt="Illustrazioni digitali" itemprop="image">
                             <div class="servizio-overlay">
-                                <h3>Illustrazioni digitali</h3>
-                                <p>Realizzo illustrazioni personalizzate che danno vita alle tue idee e concetti.</p>
+                                <h3 itemprop="name">Illustrazioni digitali</h3>
+                                <p itemprop="description">Realizzo illustrazioni personalizzate che danno vita alle tue idee e concetti.</p>
                             </div>
                         </div>
                     </div>
@@ -158,49 +162,49 @@
             <div id="section4" class="section">
                 <h2>I miei progetti</h2>
                 <!-- Carosello Portfolio -->
-                <div class="portfolio-carousel-container" id="portfolio-carousel-container">
+                <div class="portfolio-carousel-container" id="portfolio-carousel-container" itemprop="workExample" itemscope itemtype="http://schema.org/CreativeWork">
                     <div class="portfolio-carousel">
                         <div class="carousel-track" id="carouselTrack">
-                            <div class="carousel-slide">
-                                <img src="Tarocchi/1.png" alt="Tarocco del Matto" class="carousel-image">
+                            <div class="carousel-slide" itemprop="hasPart" itemscope itemtype="http://schema.org/VisualArtwork">
+                                <img src="Tarocchi/1.png" alt="Tarocco del Matto" class="carousel-image" itemprop="image">
                                 <div class="carousel-caption">
-                                    <h3>Tarocco del Matto</h3>
-                                    <p>Carta ispirata al videogioco Dark Souls 1</p>
+                                    <h3 itemprop="name">Tarocco del Matto</h3>
+                                    <p itemprop="description">Carta ispirata al videogioco Dark Souls 1</p>
                                 </div>
                             </div>
-                            <div class="carousel-slide">
-                                <img src="Tarocchi/2.png" alt="Tarocco della Papessa" class="carousel-image">
+                            <div class="carousel-slide" itemprop="hasPart" itemscope itemtype="http://schema.org/VisualArtwork">
+                                <img src="Tarocchi/2.png" alt="Tarocco della Papessa" class="carousel-image" itemprop="image">
                                 <div class="carousel-caption">
-                                    <h3>Tarocco della Papessa</h3>
-                                    <p>Carta ispirata al videogioco Dark Souls 3</p>
+                                    <h3 itemprop="name">Tarocco della Papessa</h3>
+                                    <p itemprop="description">Carta ispirata al videogioco Dark Souls 3</p>
                                 </div>
                             </div>
-                            <div class="carousel-slide">
-                                <img src="Tarocchi/3.png" alt="Tarocco dell'Imperatore" class="carousel-image">
+                            <div class="carousel-slide" itemprop="hasPart" itemscope itemtype="http://schema.org/VisualArtwork">
+                                <img src="Tarocchi/3.png" alt="Tarocco dell'Imperatore" class="carousel-image" itemprop="image">
                                 <div class="carousel-caption">
-                                    <h3>Tarocco dell'Imperatore</h3>
-                                    <p>Carta ispirata al videogioco Dark Souls 1</p>
+                                    <h3 itemprop="name">Tarocco dell'Imperatore</h3>
+                                    <p itemprop="description">Carta ispirata al videogioco Dark Souls 1</p>
                                 </div>
                             </div>
-                            <div class="carousel-slide">
-                                <img src="Tarocchi/4.png" alt="Tarocco degli Amanti" class="carousel-image">
+                            <div class="carousel-slide" itemprop="hasPart" itemscope itemtype="http://schema.org/VisualArtwork">
+                                <img src="Tarocchi/4.png" alt="Tarocco degli Amanti" class="carousel-image" itemprop="image">
                                 <div class="carousel-caption">
-                                    <h3>Tarocco degli Amanti</h3>
-                                    <p>Carta ispirata al videogioco Dark Souls 3</p>
+                                    <h3 itemprop="name">Tarocco degli Amanti</h3>
+                                    <p itemprop="description">Carta ispirata al videogioco Dark Souls 3</p>
                                 </div>
                             </div>
-                            <div class="carousel-slide">
-                                <img src="Tarocchi/5.png" alt="Tarocco del Carro" class="carousel-image">
+                            <div class="carousel-slide" itemprop="hasPart" itemscope itemtype="http://schema.org/VisualArtwork">
+                                <img src="Tarocchi/5.png" alt="Tarocco del Carro" class="carousel-image" itemprop="image">
                                 <div class="carousel-caption">
-                                    <h3>Tarocco del Carro</h3>
-                                    <p>Carta ispirata al videogioco Dark Souls 3</p>
+                                    <h3 itemprop="name">Tarocco del Carro</h3>
+                                    <p itemprop="description">Carta ispirata al videogioco Dark Souls 3</p>
                                 </div>
                             </div>
-                            <div class="carousel-slide">
-                                <img src="Tarocchi/6.png" alt="Tarocco del Sole" class="carousel-image">
+                            <div class="carousel-slide" itemprop="hasPart" itemscope itemtype="http://schema.org/VisualArtwork">
+                                <img src="Tarocchi/6.png" alt="Tarocco del Sole" class="carousel-image" itemprop="image">
                                 <div class="carousel-caption">
-                                    <h3>Tarocco del Sole</h3>
-                                    <p>Carta ispirata al videogioco Dark Souls 1</p>
+                                    <h3 itemprop="name">Tarocco del Sole</h3>
+                                    <p itemprop="description">Carta ispirata al videogioco Dark Souls 1</p>
                                 </div>
                             </div>
                         </div>
@@ -223,7 +227,7 @@
             
                 <div class="portfolio-download">
                     <p>Visualizza tutti i miei progetti creativi in un unico documento!</p>
-                    <a href="Portfolio Rozzoni Federico.pdf" download class="download-btn" title="Scarica il portfolio completo in formato PDF">
+                    <a href="Portfolio Rozzoni Federico.pdf" download class="download-btn" title="Scarica il portfolio completo in formato PDF" itemprop="url">
                         <i class="fas fa-download"></i> Scarica il mio portfolio completo
                     </a>
                 </div>
@@ -235,61 +239,61 @@
                     <div class="contact-info-column">
                         <h3>I miei contatti</h3>
                         <ul class="contact-info">
-                            <li><i class="fas fa-envelope"></i> <a href="mailto:rozzonifedericographic@gmail.com" title="Invia un'email a Federico Rozzoni">Email - rozzonifedericographic@gmail.com</a></li>
-                            <li><i class="fas fa-phone"></i> <a href="tel:+3318491361" title="Chiama Federico Rozzoni">Telefono - +39 331 849 1361</a></li>
-                            <li><i class="fab fa-instagram"></i> <a href="https://www.instagram.com/federico_rozzoni/" target="_blank" title="Visita il profilo Instagram di Federico Rozzoni">Instagram - @federico_rozzoni</a></li>
-                            <li><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/federico-rozzoni-7606a829a/" target="_blank" title="Visita il profilo LinkedIn di Federico Rozzoni">LinkedIn - Federico Rozzoni</a></li>
+                            <li><i class="fas fa-envelope"></i> <a href="mailto:rozzonifedericographic@gmail.com" title="Invia un'email a Federico Rozzoni" itemprop="email">Email - rozzonifedericographic@gmail.com</a></li>
+                            <li><i class="fas fa-phone"></i> <a href="tel:+3318491361" title="Chiama Federico Rozzoni" itemprop="telephone">Telefono - +39 331 849 1361</a></li>
+                            <li><i class="fab fa-instagram"></i> <a href="https://www.instagram.com/federico_rozzoni/" target="_blank" title="Visita il profilo Instagram di Federico Rozzoni" itemprop="sameAs">Instagram - @federico_rozzoni</a></li>
+                            <li><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/federico-rozzoni-7606a829a/" target="_blank" title="Visita il profilo LinkedIn di Federico Rozzoni" itemprop="sameAs">LinkedIn - Federico Rozzoni</a></li>
                         </ul>
                         
                         <div class="map-container">
-    <h3>Dove lavoro</h3>
-    <p>Sono situato a Oleggio, in provincia di Novara:</p>
-    
-    <!-- Informazioni di contatto in formato testo per SEO -->
-    <div class="location-details">
-        <address>
-            <strong>Federico Rozzoni Graphics</strong><br>
-            Oleggio, 28047<br>
-            Provincia di Novara, Piemonte<br>
-            Italia
-        </address>
-        <p>La mia zona di lavoro copre tutto il territorio di Novara, Milano e zone limitrofe. Sono facilmente raggiungibile sia in auto che con i mezzi pubblici.</p>
-    </div>
-    
-    <div class="map-wrapper">
-        <!-- Iframe ottimizzato SEO -->
-        <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d22419.55057478875!2d8.633857639550783!3d45.59775!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47865da936a446d1%3A0x13070c2ddcc1ae6e!2s28047%20Oleggio%20NO!5e0!3m2!1sit!2sit!4v1711898428626!5m2!1sit!2sit" 
-            width="100%" 
-            height="300" 
-            style="border:0;" 
-            allowfullscreen="" 
-            loading="lazy" 
-            referrerpolicy="no-referrer-when-downgrade"
-            title="Mappa interattiva di Oleggio (NO) - Sede di Federico Rozzoni Graphics"
-            aria-label="Mappa che mostra la posizione di Oleggio in provincia di Novara, dove si trova Federico Rozzoni Graphics"
-            name="mappa-oleggio">
-        </iframe>
-        
-        <!-- Fallback testuale per accessibilità -->
-        <noscript>
-            <p>Per visualizzare la mappa interattiva, abilita JavaScript nel tuo browser o 
-            <a href="https://www.google.com/maps/place/28047+Oleggio+NO/" target="_blank" rel="noopener">
-                visualizza Oleggio su Google Maps
-            </a></p>
-        </noscript>
-    </div>
-    
-    <!-- Link alternativo per chi preferisce aprire direttamente Google Maps -->
-    <p class="map-link">
-        <a href="https://www.google.com/maps/place/28047+Oleggio+NO/" 
-           target="_blank" 
-           rel="noopener"
-           title="Apri Oleggio su Google Maps in una nuova finestra">
-            📍 Visualizza su Google Maps
-        </a>
-    </p>
-</div>
+                            <h3>Dove lavoro</h3>
+                            <p>Sono situato a Oleggio, in provincia di Novara:</p>
+                            
+                            <!-- Informazioni di contatto in formato testo per SEO -->
+                            <div class="location-details" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+                                <address>
+                                    <strong itemprop="name">Federico Rozzoni Graphics</strong><br>
+                                    <span itemprop="addressLocality">Oleggio</span>, <span itemprop="postalCode">28047</span><br>
+                                    Provincia di <span itemprop="addressRegion">Novara</span>, <span itemprop="addressRegion">Piemonte</span><br>
+                                    <span itemprop="addressCountry">Italia</span>
+                                </address>
+                                <p itemprop="areaServed">La mia zona di lavoro copre tutto il territorio di Novara, Milano e zone limitrofe. Sono facilmente raggiungibile sia in auto che con i mezzi pubblici.</p>
+                            </div>
+                            
+                            <div class="map-wrapper">
+                                <!-- Iframe ottimizzato SEO -->
+                                <iframe 
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d22419.55057478875!2d8.633857639550783!3d45.59775!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47865da936a446d1%3A0x13070c2ddcc1ae6e!2s28047%20Oleggio%20NO!5e0!3m2!1sit!2sit!4v1711898428626!5m2!1sit!2sit" 
+                                    width="100%" 
+                                    height="300" 
+                                    style="border:0;" 
+                                    allowfullscreen="" 
+                                    loading="lazy" 
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                    title="Mappa interattiva di Oleggio (NO) - Sede di Federico Rozzoni Graphics"
+                                    aria-label="Mappa che mostra la posizione di Oleggio in provincia di Novara, dove si trova Federico Rozzoni Graphics"
+                                    name="mappa-oleggio">
+                                </iframe>
+                                
+                                <!-- Fallback testuale per accessibilità -->
+                                <noscript>
+                                    <p>Per visualizzare la mappa interattiva, abilita JavaScript nel tuo browser o 
+                                    <a href="https://www.google.com/maps/place/28047+Oleggio+NO/" target="_blank" rel="noopener">
+                                        visualizza Oleggio su Google Maps
+                                    </a></p>
+                                </noscript>
+                            </div>
+                            
+                            <!-- Link alternativo per chi preferisce aprire direttamente Google Maps -->
+                            <p class="map-link">
+                                <a href="https://www.google.com/maps/place/28047+Oleggio+NO/" 
+                                   target="_blank" 
+                                   rel="noopener"
+                                   title="Apri Oleggio su Google Maps in una nuova finestra">
+                                    📍 Visualizza su Google Maps
+                                </a>
+                            </p>
+                        </div>
                     </div>
                     
                     <div class="contact-form-column">
