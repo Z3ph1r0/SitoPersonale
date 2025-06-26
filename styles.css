@@ -924,7 +924,7 @@ body {
     }
     
      .carousel-controls {
-        gap: 10px; /* MODIFICATO: Gap ridotto */
+        gap: 10px;
     }
     
     .carousel-control {
@@ -966,7 +966,6 @@ body {
     
     .navbar-brand h2 {
         font-size: 1rem;
-        display: none;
     }
     
     .logo-navbar {
