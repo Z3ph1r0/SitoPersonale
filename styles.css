@@ -1064,10 +1064,7 @@ body {
 /* Preload hint per immagini critiche */
 .servizio-immagine img,
 .carousel-image,
-.profile-image {
-    /* TTI: Ottimizzazione loading delle immagini */
-    loading: lazy;
-}
+
 
 /* Contenimento layout per evitare reflow */
 .servizio-immagine,

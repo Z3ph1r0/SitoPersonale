@@ -41,6 +41,32 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
+    // Burger menu functionality
+const burgerMenu = document.getElementById('burgerMenu');
+const navMenu = document.getElementById('navMenu');
+
+burgerMenu.addEventListener('click', () => {
+    burgerMenu.classList.toggle('active');
+    navMenu.classList.toggle('active');
+});
+
+// Chiudi menu quando clicchi su una voce
+const navLinks = document.querySelectorAll('.nav-btn');
+navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        burgerMenu.classList.remove('active');
+        navMenu.classList.remove('active');
+    });
+});
+
+// Chiudi menu quando clicchi fuori
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.floating-nav')) {
+        burgerMenu.classList.remove('active');
+        navMenu.classList.remove('active');
+    }
+});
+
     // ==========================================================================
     // CAROSELLO PORTFOLIO CON LOOP INFINITO
     // ==========================================================================
@@ -236,16 +262,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const slidesToPrepend = this.slidesPerView;
             this.currentIndex = index + slidesToPrepend;
             this.updateCarousel();
-        }
-
-        // Avvia autoplay
-        startAutoplay() {
-            if (this.isAutoplay && !this.autoplayInterval) {
-                this.autoplayInterval = setInterval(() => {
-                    this.next();
-                }, this.autoplayDelay);
-                this.updateAutoplayUI();
-            }
         }
 
         // Ferma autoplay
