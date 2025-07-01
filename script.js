@@ -41,34 +41,36 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Burger menu functionality
-const burgerMenu = document.getElementById('burgerMenu');
-const navMenu = document.getElementById('navMenu');
+    // Burger menu functionality (se presente)
+    const burgerMenu = document.getElementById('burgerMenu');
+    const navMenu = document.getElementById('navMenu');
 
-burgerMenu.addEventListener('click', () => {
-    burgerMenu.classList.toggle('active');
-    navMenu.classList.toggle('active');
-});
+    if (burgerMenu && navMenu) {
+        burgerMenu.addEventListener('click', () => {
+            burgerMenu.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
 
-// Chiudi menu quando clicchi su una voce
-const navLinks = document.querySelectorAll('.nav-btn');
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        burgerMenu.classList.remove('active');
-        navMenu.classList.remove('active');
-    });
-});
+        // Chiudi menu quando clicchi su una voce
+        const navLinks = document.querySelectorAll('.nav-btn');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                burgerMenu.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
 
-// Chiudi menu quando clicchi fuori
-document.addEventListener('click', (e) => {
-    if (!e.target.closest('.floating-nav')) {
-        burgerMenu.classList.remove('active');
-        navMenu.classList.remove('active');
+        // Chiudi menu quando clicchi fuori
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.floating-nav')) {
+                burgerMenu.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
     }
-});
 
     // ==========================================================================
-    // CAROSELLO PORTFOLIO CON LOOP INFINITO
+    // CAROSELLO PORTFOLIO CON LOOP INFINITO - VERSIONE CORRETTA
     // ==========================================================================
 
     class PortfolioCarousel {
@@ -82,8 +84,26 @@ document.addEventListener('click', (e) => {
             
             this.track = this.container.querySelector('.carousel-track');
             this.indicators = this.container.querySelector('.carousel-indicators');
-            this.prevBtn = this.container.querySelector('#prev-btn') || this.container.querySelector('.carousel-control[data-direction="prev"]');
-            this.nextBtn = this.container.querySelector('#next-btn') || this.container.querySelector('.carousel-control[data-direction="next"]');
+            
+            // CORREZIONE: Selettori multipli per i bottoni
+            this.prevBtn = this.container.querySelector('.carousel-control[onclick*="prev"]') || 
+                          this.container.querySelector('[data-direction="prev"]') ||
+                          this.container.querySelector('.carousel-prev') ||
+                          document.querySelector('#prev-btn');
+                          
+            this.nextBtn = this.container.querySelector('.carousel-control[onclick*="next"]') || 
+                          this.container.querySelector('[data-direction="next"]') ||
+                          this.container.querySelector('.carousel-next') ||
+                          document.querySelector('#next-btn');
+            
+            // Debug: verifica se i bottoni sono stati trovati
+            console.log('Bottoni trovati:', {
+                prev: !!this.prevBtn,
+                next: !!this.nextBtn,
+                prevElement: this.prevBtn,
+                nextElement: this.nextBtn
+            });
+            
             this.autoplayToggle = document.getElementById('autoplay-toggle');
             this.autoplayStatus = document.querySelector('.autoplay-status');
             
@@ -120,6 +140,19 @@ document.addEventListener('click', (e) => {
             this.attachEventListeners();
             this.updateCarousel();
             this.startAutoplay();
+        }
+
+        // Avvia autoplay
+        startAutoplay() {
+            if (!this.isAutoplay) return;
+            
+            this.stopAutoplay(); // Pulisci eventuali interval esistenti
+            
+            this.autoplayInterval = setInterval(() => {
+                this.next();
+            }, this.autoplayDelay);
+            
+            this.updateAutoplayUI();
         }
 
         // Crea le slide (originali + cloni per loop infinito)
@@ -312,17 +345,33 @@ document.addEventListener('click', (e) => {
 
         // Aggiungi event listeners
         attachEventListeners() {
-            // Controlli navigazione
+            // Controlli navigazione - CORREZIONE
             if (this.nextBtn) {
-                this.nextBtn.addEventListener('click', () => {
+                // Rimuovi eventuali onclick inline
+                this.nextBtn.removeAttribute('onclick');
+                this.nextBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Click su next button');
                     this.handleUserInteraction(() => this.next());
                 });
+                console.log('Event listener aggiunto al bottone next');
+            } else {
+                console.warn('Bottone next non trovato');
             }
 
             if (this.prevBtn) {
-                this.prevBtn.addEventListener('click', () => {
+                // Rimuovi eventuali onclick inline
+                this.prevBtn.removeAttribute('onclick');
+                this.prevBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Click su prev button');
                     this.handleUserInteraction(() => this.prev());
                 });
+                console.log('Event listener aggiunto al bottone prev');
+            } else {
+                console.warn('Bottone prev non trovato');
             }
 
             // Toggle autoplay
@@ -452,7 +501,7 @@ document.addEventListener('click', (e) => {
     // INIZIALIZZAZIONE CAROSELLO
     // ==========================================================================
 
-    // Dati delle immagini del portfolio (MODIFICA QUESTI DATI CON I TUOI)
+    // Dati delle immagini del portfolio
     const portfolioImages = [
         { 
             src: 'Tarocchi/1.png', 
@@ -487,7 +536,6 @@ document.addEventListener('click', (e) => {
     ];
 
     // Inizializza il carosello quando il DOM è pronto
-    // Trova il container del carosello
     const carouselContainer = document.querySelector('.portfolio-carousel-container');
     
     if (carouselContainer && portfolioImages.length > 0) {
@@ -503,7 +551,70 @@ document.addEventListener('click', (e) => {
     } else {
         console.warn('Carosello: container non trovato o nessuna immagine disponibile');
     }
+
+    // ==========================================================================
+    // FALLBACK PER BOTTONI CAROSELLO - FUNZIONI GLOBALI
+    // ==========================================================================
+    
+    // Funzioni globali per i bottoni (caso in cui abbiano onclick inline nell'HTML)
+    window.prevSlide = function() {
+        console.log('Funzione prevSlide chiamata');
+        if (window.portfolioCarousel) {
+            window.portfolioCarousel.prev();
+        }
+    };
+    
+    window.nextSlide = function() {
+        console.log('Funzione nextSlide chiamata');
+        if (window.portfolioCarousel) {
+            window.portfolioCarousel.next();
+        }
+    };
+
+    // Alternativa: cerca i bottoni con classi generiche
+    setTimeout(() => {
+        const allPrevButtons = document.querySelectorAll('button:not([data-carousel-handled])');
+        const allNextButtons = document.querySelectorAll('button:not([data-carousel-handled])');
         
+        allPrevButtons.forEach(btn => {
+            const btnText = btn.textContent.toLowerCase();
+            const btnHTML = btn.innerHTML.toLowerCase();
+            
+            if (btnText.includes('prev') || btnText.includes('◀') || 
+                btnHTML.includes('left') || btnHTML.includes('prev') ||
+                btn.classList.contains('carousel-prev')) {
+                
+                btn.dataset.carouselHandled = 'true';
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    console.log('Bottone prev generico cliccato');
+                    if (window.portfolioCarousel) {
+                        window.portfolioCarousel.prev();
+                    }
+                });
+            }
+        });
+        
+        allNextButtons.forEach(btn => {
+            const btnText = btn.textContent.toLowerCase();
+            const btnHTML = btn.innerHTML.toLowerCase();
+            
+            if (btnText.includes('next') || btnText.includes('▶') || 
+                btnHTML.includes('right') || btnHTML.includes('next') ||
+                btn.classList.contains('carousel-next')) {
+                
+                btn.dataset.carouselHandled = 'true';
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    console.log('Bottone next generico cliccato');
+                    if (window.portfolioCarousel) {
+                        window.portfolioCarousel.next();
+                    }
+                });
+            }
+        });
+    }, 1000);
+    
     // ==========================================================================
     // MODAL PER IMMAGINI
     // ==========================================================================
